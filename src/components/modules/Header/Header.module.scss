@@ -1,0 +1,47 @@
+@import '../../../index.scss';
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left:0;
+    right: 0;
+    width: 100%;
+    margin: 0 auto;
+    height: 4rem;
+    background-color: $background-color-header;
+    color: $font-color-header;
+    transition: .4s;
+
+    &__active {
+        background-color: $background-color-header-active;
+    }
+
+    .wrapper_logo {
+    padding: 0 1rem;
+
+        .logo {
+            text-decoration: none;
+            word-wrap: break-word;
+            color: inherit;
+        }
+    }
+
+    .wrapper_login_register {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    padding: 0 1rem;
+
+        .login,
+        .register {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .register {}
+    }
+
+}
