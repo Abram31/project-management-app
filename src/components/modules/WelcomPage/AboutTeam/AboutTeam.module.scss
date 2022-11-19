@@ -1,4 +1,4 @@
-@import "../../../../index.scss";
+@import '../../../../utils/scss/constants.scss';
 
 .wrapper_about_team {
     padding: 0 1rem;
@@ -48,14 +48,28 @@
                     background-repeat: no-repeat;
                     background-position: center;
                     background-size: cover;
+                    transition: .4s;
+
+                    &:active {
+                        transform: scale(.9);
+                    }
+
                 }
 
                 .link_github {
                     background-image: url(https://abram31.github.io/rslang/assets/11f7dab1e18bc047be01.svg);
+                    filter: invert(.5);
+
+                    &:hover {
+                        filter: $hover-color-links;
+                    }
                 }
 
                 .link_linkedin {
                     background-image: url(https://abram31.github.io/rslang/assets/8a54e5d33f1c32382b7e.svg);
+                &:hover {
+                        filter: $hover-color-links-linkedin;
+                    }
                 }
             }
         }

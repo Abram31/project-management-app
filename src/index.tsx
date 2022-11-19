@@ -4,12 +4,14 @@ import './index.scss';
 import reportWebVitals from './reportWebVitals';
 import { WelcomPage } from 'components/modules/WelcomPage/WelcomPage';
 import { Header } from 'components/modules/Header/Header';
+import { Footer } from 'components/modules/Footer/Footer';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <Header />
     <WelcomPage />
+    <Footer />
   </React.StrictMode>
 );
 
