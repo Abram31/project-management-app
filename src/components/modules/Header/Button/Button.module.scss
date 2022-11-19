@@ -1,0 +1,13 @@
+.button {
+    border-radius: .5rem;
+    padding: .6rem;
+    cursor: pointer;
+    transition: all .4s;
+    text-decoration: none;
+    width: 7rem;
+    text-align: center;
+
+    &:active {
+        transform: scale(.9);
+    }
+}
