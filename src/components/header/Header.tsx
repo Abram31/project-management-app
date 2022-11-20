@@ -1,13 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-
-import { User } from 'App';
+import { Link, NavLink } from 'react-router-dom';
 
 import classes from './header.module.scss';
 
-type Props = { user: User | null; handleLogin: () => void; handleLogout: () => void };
+import { useAuthUser } from 'hooks/hooks';
+import { ROUTES } from 'constants/constants';
 
-const Header = ({ user, handleLogin, handleLogout }: Props) => {
+type Props = { handleLogin: () => void; handleLogout: () => void };
+
+const Header = ({ handleLogin, handleLogout }: Props) => {
+  const { userExist } = useAuthUser();
   const setActive = ({ isActive }: { isActive: boolean }) =>
     isActive ? classes.link__active : classes.link;
 
@@ -17,13 +19,13 @@ const Header = ({ user, handleLogin, handleLogout }: Props) => {
         <NavLink className={setActive} to="/">
           Welcome
         </NavLink>
-        {user ? (
+        {userExist ? (
           <>
             <div>
-              <NavLink className={setActive} to="/boards">
+              <NavLink className={setActive} to={ROUTES.boards}>
                 Boards
               </NavLink>
-              <NavLink className={setActive} to="/edit">
+              <NavLink className={setActive} to={ROUTES.edit}>
                 Edit profile
               </NavLink>
             </div>
@@ -31,8 +33,12 @@ const Header = ({ user, handleLogin, handleLogout }: Props) => {
           </>
         ) : (
           <div className="buttons">
-            <button onClick={handleLogin}>Sign in</button>
-            <button onClick={handleLogin}>Sign up</button>
+            <Link onClick={handleLogin} to={ROUTES.signin}>
+              Sign in
+            </Link>
+            <Link onClick={handleLogin} to={ROUTES.signup}>
+              Sign up
+            </Link>
           </div>
         )}
       </div>

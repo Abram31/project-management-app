@@ -1,0 +1,44 @@
+.input__box {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+.input {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--title-color);
+  border: 1px solid transparent;
+  font-size: 16px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  position: relative;
+
+  &.invalid {
+    border-color: var(--error-color);
+  }
+  &:focus {
+    border-color: var(--orange);
+  }
+  &.invalid:focus {
+    border-color: var(--error-color);
+    box-shadow: 0 0 3px 3px rgba(var(--error-color-rgb), 0.3);
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover {
+    -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset !important;
+    border-color: var(--main-color);
+    -webkit-text-fill-color: var(--title-color);
+  }
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    border-color: var(--orange);
+  }
+  &.invalid:-webkit-autofill:focus,
+  &.invalid:-webkit-autofill:active {
+    border-color: var(--error-color);
+  }
+}

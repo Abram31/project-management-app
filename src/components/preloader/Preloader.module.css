@@ -1,0 +1,35 @@
+.preloader__box {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(1px);
+}
+.preloader__box.fixed {
+  position: fixed;
+}
+.preloader__box.absolute {
+  position: absolute;
+}
+.preloader {
+  position: absolute;
+  display: inline-block;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-top: 3px solid var(--title-color);
+  animation: loading 0.8s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

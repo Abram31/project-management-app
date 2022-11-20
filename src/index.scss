@@ -1,9 +1,166 @@
-body {
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
-
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+* {
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+input:focus,
+button:focus,
+select:focus {
+  outline: none !important;
+}
+:root {
+  --main-color: #8e8e8e;
+  --title-color: #bbc4cc;
+  --text-color: #8b94a1;
+  --input-bg: #2e3439;
+  --main-bg: #23272b;
+  --black-color: #16191c;
+  --orange: #ff9b44;
+  --error-color: #dc3545;
+  --error-color-rgb: 220, 53, 69;
+  --error-color-text: #f62d51;
+  --pink-color: #fc6075;
+  --orange-light: #f3a94f;
+  --orange-pink-rgb: 254, 119, 104;
+  --toastify-color-info: var(--title-color);
+  --toastify-color-success: #55ce63;
+  --toastify-color-warning: var(--orange);
+  --toastify-color-error: var(--error-color);
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--main-bg);
+  color: var(--main-color);
+  font-size: 16px;
+}
+.Toastify__toast.Toastify__toast-theme--dark {
+  background: var(--black-color);
+  border: 1px solid var(--main-bg);
+  color: var(--main-color);
+}
