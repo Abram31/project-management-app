@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import module from './Button.module.scss';
 
 interface ButtonProps {
@@ -18,13 +19,12 @@ export const Button = ({
   disabled,
 }: ButtonProps) => {
   return (
-    <a
-      href={pathLink}
+    <NavLink
+      to={pathLink}
       className={`${module.button} ${disabled && module.button_disabled}`}
       style={{ backgroundColor: fullBackground, borderColor: borderColor, color: colorText }}
-      //   disabled={disabled}
     >
       {title}
-    </a>
+    </NavLink>
   );
 };

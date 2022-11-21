@@ -1,4 +1,6 @@
+import { ROUTES } from 'constants/constants';
 import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { Button } from './Button/Button';
 import { ChangeLang } from './ChangeLang/ChangeLang';
 import module from './Header.module.scss';
@@ -13,20 +15,20 @@ export const Header = () => {
   return (
     <header className={`${module.header} ${prevScroll && module.header__active}`}>
       <div className={module.wrapper_logo}>
-        <a className={module.logo} href="">
+        <NavLink className={module.logo} to="/">
           Project Management System
-        </a>{' '}
+        </NavLink>{' '}
       </div>
       <div className={module.wrapper_login_register}>
         <Button
-          pathLink=""
+          pathLink={ROUTES.signin}
           borderColor="none"
           colorText="whitesmoke"
           title="Войти"
           fullBackground="rgba(68, 165, 79, 1)"
         />
         <Button
-          pathLink=""
+          pathLink={ROUTES.signup}
           borderColor="none"
           colorText="whitesmoke"
           title="Регистрация"
