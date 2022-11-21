@@ -1,0 +1,14 @@
+.change_lang {
+    width: 2.5rem;
+    text-align: center;
+    border-radius: 10rem;
+    background-color: #808080;
+    padding: .6rem;
+    color: whitesmoke;
+    cursor: pointer;
+    transition: .4s;
+
+    &:active {
+        transform: scale(.9);
+    }
+}

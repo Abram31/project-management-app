@@ -1,0 +1,26 @@
+@import '../../../../utils/scss/constants.scss';
+.link_github {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: .4s;
+
+    &::before {
+        background-image: url(https://abram31.github.io/rslang/assets/11f7dab1e18bc047be01.svg);
+        content: '';
+        width: 2rem;
+        height: 2rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        filter: invert(.5);
+
+    }
+
+    &:hover,
+    &:hover::before {
+        filter: $hover-color-links;
+    }
+}

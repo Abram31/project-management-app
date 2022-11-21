@@ -25,7 +25,7 @@ const Header = ({ handleLogin, handleLogout }: Props) => {
               <NavLink className={setActive} to={ROUTES.boards}>
                 Boards
               </NavLink>
-              <NavLink className={setActive} to={ROUTES.edit}>
+              <NavLink className={setActive} to={ROUTES.boards}>
                 Edit profile
               </NavLink>
             </div>
