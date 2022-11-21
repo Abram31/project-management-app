@@ -29,8 +29,7 @@ function App() {
 
   return (
     <>
-      {/* <Header handleLogin={handleLogin} handleLogout={handleLogout} /> */}
-      <Header />
+      <Header handleLogin={handleLogin} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<WelcomPage />} />
         <Route
@@ -47,7 +46,7 @@ function App() {
         </Route>
       </Routes>
       <Footer />
-      {/* <ToastContainer {...TOASTIFY_SETTINGS} /> */}
+      <ToastContainer {...TOASTIFY_SETTINGS} />
     </>
   );
 }

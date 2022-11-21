@@ -86,6 +86,7 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
 article,
 aside,
 details,
@@ -99,17 +100,21 @@ nav,
 section {
   display: block;
 }
+
 body {
   line-height: 1;
 }
+
 ol,
 ul {
   list-style: none;
 }
+
 blockquote,
 q {
   quotes: none;
 }
+
 blockquote:before,
 blockquote:after,
 q:before,
@@ -117,22 +122,27 @@ q:after {
   content: '';
   content: none;
 }
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
 * {
   box-sizing: border-box;
 }
+
 a {
   text-decoration: none;
   color: inherit;
 }
+
 input:focus,
 button:focus,
 select:focus {
   outline: none !important;
 }
+
 :root {
   --main-color: #8e8e8e;
   --title-color: #bbc4cc;
@@ -158,7 +168,9 @@ body {
   background-color: var(--main-bg);
   color: var(--main-color);
   font-size: 16px;
+  padding: 4rem 0;
 }
+
 .Toastify__toast.Toastify__toast-theme--dark {
   background: var(--black-color);
   border: 1px solid var(--main-bg);

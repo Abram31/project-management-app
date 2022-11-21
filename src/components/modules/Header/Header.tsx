@@ -2,11 +2,15 @@ import { ROUTES } from 'constants/constants';
 import { useAuthUser } from 'hooks/hooks';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Button } from './Button/Button';
+import { Button } from '../common/Button/Button';
 import { ChangeLang } from './ChangeLang/ChangeLang';
 import module from './Header.module.scss';
 
-export const Header = () => {
+export interface HeaderProps {
+  handleLogin?: () => void;
+  handleLogout?: () => void;
+}
+export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
   const [prevScroll, setScroll] = useState(false);
   const { userExist } = useAuthUser();
 
@@ -38,6 +42,14 @@ export const Header = () => {
             title="Edit profile"
             fullBackground="rgba(204, 124, 54, 1)"
           />
+          <Button
+            pathLink={''}
+            borderColor="none"
+            colorText="whitesmoke"
+            title="Sign out"
+            fullBackground="#d84315"
+            handleLogout={handleLogout}
+          />
           <ChangeLang />
         </div>
       ) : (
@@ -48,6 +60,7 @@ export const Header = () => {
             colorText="whitesmoke"
             title="Sing In"
             fullBackground="rgba(68, 165, 79, 1)"
+            handleLogin={handleLogin}
           />
           <Button
             pathLink={ROUTES.signup}
@@ -55,6 +68,7 @@ export const Header = () => {
             colorText="whitesmoke"
             title="Sing Up"
             fullBackground="rgba(204, 124, 54, 1)"
+            handleLogin={handleLogin}
           />
           <ChangeLang />
         </div>

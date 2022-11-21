@@ -1,12 +1,12 @@
 import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignUp.module.scss';
-import InputField from '../../inputField/InputField';
+import InputField from '../../../common/inputField/InputField';
 import { ERROR_TEXT, REGEX, ROUTES, URLS } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
-import Preloader from '../../preloader/Preloader';
+import Preloader from '../../../common/preloader/Preloader';
 
 interface ISignUpData {
   name: string;

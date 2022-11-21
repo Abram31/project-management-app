@@ -11,6 +11,10 @@
     transition: .4s;
     padding: 0 1rem;
 
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+
     .wrapper_links {
         display: flex;
         flex-wrap: wrap;
@@ -26,7 +30,7 @@
         background-size: contain;
         filter: invert(.5);
         transition: .4s;
-        
+
         &:hover {
             filter: $hover-color-links;
         }
