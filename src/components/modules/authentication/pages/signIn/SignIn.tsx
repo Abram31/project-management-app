@@ -1,14 +1,14 @@
 import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignIn.module.scss';
-import InputField from 'components/inputField/InputField';
+import InputField from '../../inputField/InputField';
 import { ERROR_TEXT, REGEX, ROUTES, URLS } from 'constants/constants';
-import FormBtn from 'components/formBtn/FormBtn';
+import FormBtn from '../../formBtn/FormBtn';
 import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { setUserData } from '../../../store/authorizationSlice';
-import Preloader from 'components/preloader/Preloader';
+import { useAppDispatch } from 'hooks/hooks';
+import { setUserData } from 'store/authorizationSlice';
+import Preloader from '../../preloader/Preloader';
 
 interface ISignInData {
   login: string;
