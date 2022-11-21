@@ -1,40 +1,50 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
-import Boards from 'components/boards/Boards';
-import Welcome from 'components/welcome/Welcome';
-import EditProfile from 'components/edit-profile/EditProfile';
+import Boards from 'components/pages/boards/Boards';
+import Welcome from 'components/pages/welcome/Welcome';
+import EditProfile from 'components/pages/edit-profile/EditProfile';
 import PrivateRoutes from 'components/private-routes/PrivateRoutes';
 import Header from 'components/header/Header';
-import Login from 'components/login/Login';
-
-export type User = { id: string; name: string };
+import { useAppDispatch, useAuthUser } from 'hooks/hooks';
+import { removeUserData } from 'store/authorizationSlice';
+import { ToastContainer } from 'react-toastify';
+import { ROUTES, TOASTIFY_SETTINGS } from 'constants/constants';
+import SignIn from 'components/pages/signIn/SignIn';
+import SignUp from 'components/pages/signUp/SignUp';
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
+  const { userExist } = useAuthUser();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    setUser({ id: '1', name: 'John' });
-    navigate('/boards');
+    navigate(ROUTES.boards);
   };
   const handleLogout = () => {
-    setUser(null);
+    dispatch(removeUserData());
     navigate('/');
   };
 
   return (
     <>
-      <Header user={user} handleLogin={handleLogin} handleLogout={handleLogout} />
+      <Header handleLogin={handleLogin} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<Welcome />} />
-        <Route path="/signin" element={!user ? <Login /> : <Navigate to="/boards" />} />
-        <Route path="/signup" element={!user ? <Login /> : <Navigate to="/boards" />} />
-        <Route element={<PrivateRoutes user={user} />}>
-          <Route path="/boards" element={<Boards />} />
-          <Route path="/edit" element={<EditProfile />} />
+        <Route
+          path={ROUTES.signin}
+          element={!userExist ? <SignIn /> : <Navigate to={ROUTES.boards} />}
+        />
+        <Route
+          path={ROUTES.signup}
+          element={!userExist ? <SignUp /> : <Navigate to={ROUTES.boards} />}
+        />
+        <Route element={<PrivateRoutes />}>
+          <Route path={ROUTES.boards} element={<Boards />} />
+          <Route path={ROUTES.edit} element={<EditProfile />} />
         </Route>
       </Routes>
+      <ToastContainer {...TOASTIFY_SETTINGS} />
     </>
   );
 }

@@ -1,0 +1,64 @@
+.button {
+  background: linear-gradient(90deg, var(--orange), var(--pink-color));
+  border: none;
+  font-size: 20px;
+  height: 100%;
+  padding: 0 15px;
+  color: #ffffff;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: opacity 0.2s ease-in-out;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+.button::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background: rgba(var(--orange-pink-rgb), 1);
+  box-shadow: 0 0 3px 3px rgba(var(--orange-pink-rgb), 0.3);
+  z-index: -1;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+}
+.button:hover:not([disabled])::before {
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+.button:active:not([disabled])::before {
+  box-shadow: none;
+}
+.button:disabled {
+  opacity: 0.5;
+  cursor: auto;
+}
+.button.loader {
+  color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button.loader::after {
+  content: '';
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border-top: 3px solid #ffffff;
+  animation: loading 0.8s linear infinite;
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

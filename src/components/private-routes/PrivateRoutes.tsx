@@ -1,14 +1,13 @@
-import { User } from 'App';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-type Props = {
-  user: User | null;
-};
+import { ROUTES } from 'constants/constants';
+import { useAuthUser } from 'hooks/hooks';
 
-const PrivateRoutes = ({ user }: Props) => {
-  if (!user) {
-    return <Navigate to="/signup" />;
+const PrivateRoutes = () => {
+  const { userExist } = useAuthUser();
+  if (!userExist) {
+    return <Navigate to={ROUTES.signup} />;
   }
 
   return <Outlet />;
