@@ -1,0 +1,10 @@
+.boards__board {
+    display: flex;
+    flex-direction: column;
+    width: 13rem;
+    height: 7rem;
+    border: solid 1px;
+    border-radius: .3rem;
+    padding: .5rem;
+    gap: .5rem;
+}

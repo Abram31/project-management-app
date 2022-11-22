@@ -11,9 +11,9 @@
     transition: .4s;
     padding: 0 1rem;
 
-    position: fixed;
+    position: absolute;
     bottom: 0;
-    width: 100vw;
+    width: 100%;
 
     .wrapper_links {
         display: flex;
