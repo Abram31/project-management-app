@@ -1,15 +1,21 @@
+@import '../../../../utils/scss/mixins.scss';
+
 .page_with_boards {
     display: flex;
     flex-direction: column;
     gap: 2rem;
     padding: 1rem;
+
+
     .title_boards {
-        text-align: center;
+        @include title-page
     }
+
     .boards {
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         gap: 1rem;
+        padding: 0 0 5rem 0;
     }
 }

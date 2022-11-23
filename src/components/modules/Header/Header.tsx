@@ -30,21 +30,18 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
         <div className={module.wrapper_login_register}>
           <Button
             pathLink={ROUTES.boards}
-            borderColor="none"
             colorText="whitesmoke"
             title="Boards"
             fullBackground="#0077b5"
           />
           <Button
             pathLink={ROUTES.edit}
-            borderColor="none"
             colorText="whitesmoke"
             title="Edit profile"
             fullBackground="rgba(204, 124, 54, 1)"
           />
           <Button
             pathLink={''}
-            borderColor="none"
             colorText="whitesmoke"
             title="Sign out"
             fullBackground="#d84315"
@@ -56,7 +53,6 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
         <div className={module.wrapper_login_register}>
           <Button
             pathLink={ROUTES.signin}
-            borderColor="none"
             colorText="whitesmoke"
             title="Sing In"
             fullBackground="rgba(68, 165, 79, 1)"
@@ -64,7 +60,6 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
           />
           <Button
             pathLink={ROUTES.signup}
-            borderColor="none"
             colorText="whitesmoke"
             title="Sing Up"
             fullBackground="rgba(204, 124, 54, 1)"

@@ -1,5 +1,6 @@
 import { HeaderProps } from 'components/modules/Header/Header';
-import React from 'react';
+import { onClickProps } from 'components/modules/Main/PageWithBoards/PageWIthBoards';
+import React, { MouseEventHandler } from 'react';
 import { NavLink } from 'react-router-dom';
 import module from './Button.module.scss';
 
@@ -7,9 +8,10 @@ interface ButtonProps extends HeaderProps {
   title: string;
   pathLink: string;
   fullBackground?: string;
-  borderColor: string;
+  borderColor?: string;
   colorText: string;
   disabled?: boolean;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 export const Button = ({
@@ -21,13 +23,19 @@ export const Button = ({
   disabled,
   handleLogin,
   handleLogout,
+  onClick,
 }: ButtonProps) => {
   return (
     <NavLink
       to={pathLink}
       className={`${module.button} ${disabled && module.button_disabled}`}
-      style={{ backgroundColor: fullBackground, borderColor: borderColor, color: colorText }}
-      onClick={handleLogin || handleLogout}
+      style={{
+        backgroundColor: fullBackground,
+        borderColor: borderColor,
+        border: borderColor && '1px solid',
+        color: colorText,
+      }}
+      onClick={handleLogin || handleLogout || onClick}
     >
       {title}
     </NavLink>

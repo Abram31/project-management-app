@@ -1,13 +1,11 @@
 @import '../../../../../utils/scss/constants.scss';
+@import '../../../../../utils/scss/mixins.scss';
 
 .wrapper_about_team {
     color: $font-color-header;
 
     .title {
-        padding: 0 0 2rem 0;
-        font-weight: bold;
-        font-size: 2rem;
-        text-align: center;
+        @include title-page
     }
 
     .container {
