@@ -2,5 +2,21 @@
     max-width: 1280px;
     margin: 24px auto;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.list {
+    margin-top: 32px;
+}
+
+.list__item {
+    width: 150px;
+    height: 50px;
+    margin-top: 12px;
+    border: 1px solid #5a5a5a;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
