@@ -2,8 +2,12 @@ import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
 import InputField from 'components/modules/common/inputField/InputField';
 import { URLS } from 'constants/constants';
 import { fetchRequest } from 'fetch/fetchRequest';
+import { useAppDispatch } from 'hooks/hooks';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { BorderData, setBoard } from 'store/boardsSlice';
+import store from 'store/store';
 import module from './ModalWindowNewBoard.module.scss';
 
 interface ModalWindowNewBoardProps {
@@ -12,6 +16,8 @@ interface ModalWindowNewBoardProps {
 }
 export const ModalWindowNewBoard = ({ onClick, closeModal }: ModalWindowNewBoardProps) => {
   const { register, getValues } = useForm();
+  const dispatch = useAppDispatch();
+
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const { board_description, board_title } = getValues();
@@ -20,6 +26,8 @@ export const ModalWindowNewBoard = ({ onClick, closeModal }: ModalWindowNewBoard
       URL: URLS.boards,
       token: localStorage.getItem('token')!,
       bodyParams: { title: board_title, description: board_description },
+    }).then(({ description, title, id }: BorderData) => {
+      dispatch(setBoard({ title: title, description: description, id: id }));
     });
     closeModal();
   };

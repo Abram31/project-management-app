@@ -1,21 +1,27 @@
 import { Button } from 'components/modules/common/Button/Button';
 import { URLS } from 'constants/constants';
 import { fetchRequest } from 'fetch/fetchRequest';
+import { useAppDispatch } from 'hooks/hooks';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { removeBoard, setBoards, StateData } from 'store/boardsSlice';
 import { Board } from './Board/Board';
+import { boards } from './exampleBoards';
 import { ModalWindowNewBoard } from './ModalWindowNewBoard/ModalWindowNewBoard';
 import module from './PageWIthBoards.module.scss';
 
 export interface onClickProps {
   event: MouseEventHandler<HTMLDivElement>;
 }
-interface StateBoardProps {
+export interface StateBoardProps {
   [k: string]: { title: string; description: string; id: string };
 }
 
 export const PageWIthBoards = () => {
-  const [stateBoards, setStateBoards] = useState<StateBoardProps>();
+  // const [stateBoards, setStateBoards] = useState<StateBoardProps>();
   const [stateModalNewBoard, setStateModalNewBoard] = useState(false);
+  const dispatch = useAppDispatch();
+  const boards = useSelector((state: StateData) => state.boarders);
 
   const closeAddBoard = () => {
     const body = document.querySelector('body') as HTMLBodyElement;
@@ -24,19 +30,18 @@ export const PageWIthBoards = () => {
   const onClickDelete: MouseEventHandler<HTMLDivElement> = (event) => {
     const board = event.nativeEvent.composedPath()[2] as HTMLDivElement;
     const id = (board.closest('div') as HTMLHRElement).id;
-    console.log(event.nativeEvent.composedPath()[2]);
 
     const filteredElements = Object.fromEntries(
-      Object.entries(stateBoards!).filter((item) => item[1].id !== id)
+      Object.entries(boards).filter((item) => item[1].id !== id)
     );
     fetchRequest({
       method: 'DELETE',
       token: localStorage.getItem('token')!,
       URL: `${URLS.boards}/${id}`,
+    }).then(() => {
+      console.log(filteredElements);
     });
-    console.log(localStorage.getItem('token'));
-
-    setStateBoards(filteredElements);
+    dispatch(removeBoard(id));
   };
 
   const onClickAddBoard: MouseEventHandler<HTMLAnchorElement> = (event) => {
@@ -53,10 +58,9 @@ export const PageWIthBoards = () => {
       token: localStorage.getItem('token')!,
       URL: URLS.boards,
     }).then((data) => {
-      console.log(data);
-      setStateBoards(data);
+      dispatch(setBoards(data));
     });
-  }, [stateModalNewBoard]);
+  }, []);
 
   return (
     <>
@@ -70,8 +74,8 @@ export const PageWIthBoards = () => {
           onClick={onClickAddBoard}
         />
         <div className={module.boards}>
-          {stateBoards &&
-            Object.entries(stateBoards).map((board, index) => {
+          {boards &&
+            Object.entries(boards).map((board, index) => {
               return (
                 <Board
                   key={board[0] + index}
