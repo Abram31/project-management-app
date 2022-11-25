@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
 import Preloader from '../../../common/preloader/Preloader';
 
-interface ISignUpData {
+export interface ISignUpData {
   name: string;
   login: string;
   password: string;
