@@ -40,24 +40,27 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
         >
           <Button
             pathLink={ROUTES.boards}
+            onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Boards"
             fullBackground="#0077b5"
           />
           <Button
             pathLink={ROUTES.edit}
+            onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Edit profile"
             fullBackground="rgba(204, 124, 54, 1)"
           />
           <Button
             pathLink={''}
+            onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Sign out"
             fullBackground="#d84315"
             handleLogout={handleLogout}
           />
-          <ChangeLang />
+          <ChangeLang onHandleClick={handleClickBurger} />
         </div>
       ) : (
         <div
@@ -67,6 +70,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
         >
           <Button
             pathLink={ROUTES.signin}
+            onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Sing In"
             fullBackground="rgba(68, 165, 79, 1)"
@@ -74,12 +78,13 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
           />
           <Button
             pathLink={ROUTES.signup}
+            onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Sing Up"
             fullBackground="rgba(204, 124, 54, 1)"
             handleLogin={handleLogin}
           />
-          <ChangeLang />
+          <ChangeLang onHandleClick={handleClickBurger} />
         </div>
       )}
       <Burger onClick={handleClickBurger} stateBurger={burgerState} />
