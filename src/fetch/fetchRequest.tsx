@@ -1,5 +1,3 @@
-import { ISignUpData } from 'components/modules/authentication/pages/signUp/SignUp';
-
 interface fetchRequestProps {
   URL: string;
   method: 'GET' | 'DELETE' | 'POST' | 'PUT';

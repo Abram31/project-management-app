@@ -5,9 +5,7 @@ import { fetchRequest } from 'fetch/fetchRequest';
 import { useAppDispatch } from 'hooks/hooks';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { BorderData, setBoard } from 'store/boardsSlice';
-import store from 'store/store';
 import module from './ModalWindowNewBoard.module.scss';
 
 interface ModalWindowNewBoardProps {

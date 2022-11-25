@@ -1,8 +1,5 @@
-import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { StateBoardProps } from 'components/modules/Main/PageWithBoards/PageWIthBoards';
-import { URLS } from 'constants/constants';
-import { fetchRequest } from 'fetch/fetchRequest';
-import { title } from 'process';
 
 export interface BorderData {
   title: string;
@@ -12,15 +9,7 @@ export interface BorderData {
 export interface StateData {
   [key: string]: BorderData;
 }
-let initialState: StateData = {};
-const wrapperFetch = async () => {
-  initialState = await fetchRequest({
-    method: 'GET',
-    token: localStorage.getItem('token')!,
-    URL: URLS.boards,
-  });
-};
-wrapperFetch();
+const initialState: StateData = {};
 
 const boardSlice = createSlice({
   name: 'board',
@@ -43,8 +32,6 @@ const boardSlice = createSlice({
       };
     },
     removeBoard: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
-
       delete state[action.payload];
     },
   },

@@ -6,7 +6,6 @@ import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { removeBoard, setBoards, StateData } from 'store/boardsSlice';
 import { Board } from './Board/Board';
-import { boards } from './exampleBoards';
 import { ModalWindowNewBoard } from './ModalWindowNewBoard/ModalWindowNewBoard';
 import module from './PageWIthBoards.module.scss';
 
@@ -18,7 +17,6 @@ export interface StateBoardProps {
 }
 
 export const PageWIthBoards = () => {
-  // const [stateBoards, setStateBoards] = useState<StateBoardProps>();
   const [stateModalNewBoard, setStateModalNewBoard] = useState(false);
   const dispatch = useAppDispatch();
   const boards = useSelector((state: StateData) => state.boarders);
@@ -31,20 +29,15 @@ export const PageWIthBoards = () => {
     const board = event.nativeEvent.composedPath()[2] as HTMLDivElement;
     const id = (board.closest('div') as HTMLHRElement).id;
 
-    const filteredElements = Object.fromEntries(
-      Object.entries(boards).filter((item) => item[1].id !== id)
-    );
     fetchRequest({
       method: 'DELETE',
       token: localStorage.getItem('token')!,
       URL: `${URLS.boards}/${id}`,
-    }).then(() => {
-      console.log(filteredElements);
     });
     dispatch(removeBoard(id));
   };
 
-  const onClickAddBoard: MouseEventHandler<HTMLAnchorElement> = (event) => {
+  const onClickAddBoard: MouseEventHandler<HTMLAnchorElement> = () => {
     const body = document.querySelector('body') as HTMLBodyElement;
     body.classList.add('active_modal');
     setStateModalNewBoard(!stateModalNewBoard);
@@ -60,7 +53,7 @@ export const PageWIthBoards = () => {
     }).then((data) => {
       dispatch(setBoards(data));
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

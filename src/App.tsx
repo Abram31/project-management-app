@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
-import Boards from 'components/modules/authentication/pages/boards/Boards';
 import EditProfile from 'components/modules/authentication/pages/edit-profile/EditProfile';
 import PrivateRoutes from 'components/private-routes/PrivateRoutes';
 import { Header } from 'components/modules/Header/Header';

@@ -1,7 +1,6 @@
 import React, { MouseEventHandler } from 'react';
 import module from './Board.module.scss';
 import { ButtonDeleteBasket } from '../../../common/ButtonDeleteBasket/ButtonDeleteBasket';
-import { onClickProps } from '../PageWIthBoards';
 
 interface BoardProps {
   nameBoard: string;
@@ -13,7 +12,7 @@ interface BoardProps {
   onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
-export const Board = ({ nameBoard, descriptionBoard, onClick }: BoardProps) => {
+export const Board = ({ descriptionBoard, onClick }: BoardProps) => {
   return (
     <div className={module.boards__board} id={descriptionBoard.id}>
       <span className={module.board__title}>{descriptionBoard.title}</span>
