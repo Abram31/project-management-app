@@ -3,6 +3,7 @@ import { useAuthUser } from 'hooks/hooks';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../common/Button/Button';
+import { Burger } from './Burger/Burger';
 import { ChangeLang } from './ChangeLang/ChangeLang';
 import module from './Header.module.scss';
 
@@ -12,7 +13,12 @@ export interface HeaderProps {
 }
 export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
   const [prevScroll, setScroll] = useState(false);
+  const [burgerState, setBurgerState] = useState(false);
   const { userExist } = useAuthUser();
+
+  const handleClickBurger = () => {
+    setBurgerState(!burgerState);
+  };
 
   useEffect(() => {
     window.onscroll = () => {
@@ -27,7 +33,11 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
         </NavLink>{' '}
       </div>
       {userExist ? (
-        <div className={module.wrapper_login_register}>
+        <div
+          className={`${module.wrapper_login_register} ${
+            burgerState && module.wrapper_login_register__active
+          }`}
+        >
           <Button
             pathLink={ROUTES.boards}
             colorText="whitesmoke"
@@ -50,7 +60,11 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
           <ChangeLang />
         </div>
       ) : (
-        <div className={module.wrapper_login_register}>
+        <div
+          className={`${module.wrapper_login_register} ${
+            burgerState && module.wrapper_login_register__active
+          }`}
+        >
           <Button
             pathLink={ROUTES.signin}
             colorText="whitesmoke"
@@ -68,6 +82,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
           <ChangeLang />
         </div>
       )}
+      <Burger onClick={handleClickBurger} stateBurger={burgerState} />
     </header>
   );
 };

@@ -1,0 +1,19 @@
+.burger {
+    display: none;
+}
+
+@media (max-width:750px) {
+    .burger {
+        display: block;
+        content: url(../../../../../public/burger.svg);
+        width: 2rem;
+        height: 2rem;
+        margin: 0 2rem 0 0;
+        transition: 1s;
+
+    }
+
+    .active {
+        transform: rotateZ(90deg);
+    }
+}
