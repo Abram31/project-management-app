@@ -1,0 +1,21 @@
+@import '../../../../utils/scss/constants.scss';
+
+.basket {
+    // background-color: azure;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../../../../../public/basket-delete.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    filter: $color-color-delete-basket;
+    transition: .2s;
+
+    &:hover {
+        cursor: pointer;
+        filter: $hover-color-delete-basket;
+    }
+    &:active {
+        transform: scale(.9);
+    }
+}
