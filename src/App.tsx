@@ -14,13 +14,13 @@ import SignIn from 'components/modules/authentication/pages/signIn/SignIn';
 import SignUp from 'components/modules/authentication/pages/signUp/SignUp';
 import { WelcomPage } from 'components/modules/WelcomPage/WelcomPage';
 import { Footer } from 'components/modules/Footer/Footer';
+import SingleBoard from 'components/modules/authentication/pages/boards/single-board/SingleBoard';
 
 function App() {
   const { userExist } = useAuthUser();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // TODO navigate to login page after registration
   const handleLogin = () => {
     navigate(ROUTES.boards);
   };
@@ -44,6 +44,7 @@ function App() {
         />
         <Route element={<PrivateRoutes />}>
           <Route path={ROUTES.boards} element={<Boards />} />
+          <Route path={`${ROUTES.boards}/:id`} element={<SingleBoard />} />
           <Route path={ROUTES.edit} element={<EditProfile />} />
         </Route>
       </Routes>
