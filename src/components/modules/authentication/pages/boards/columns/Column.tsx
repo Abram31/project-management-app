@@ -1,57 +1,42 @@
-import React, { useState } from 'react';
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-  DraggableProvided,
-  DroppableProvided,
-} from 'react-beautiful-dnd';
+import React from 'react';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { data, IData } from '../data';
+import { ColumnType, TaskType } from '../single-board/data';
+
+import Task from '../task/Task';
 
 import classes from '../boards.module.scss';
 
-const Column = ({ title }: { title: string }) => {
-  const [tasks, updateTasks] = useState<IData[]>(data);
+type Props = { column: ColumnType; tasks: TaskType[]; index: number };
 
-  const handleDragEnd = (result: DropResult) => {
-    const array = Array.from(tasks);
-    const [removedItem] = array.splice(result.source.index, 1);
-    array.splice(result.destination!.index, 0, removedItem);
-    updateTasks(array);
-  };
-
+const Column = ({ column, tasks, index }: Props) => {
   return (
-    <div className={classes.container}>
-      <h3 className={classes.title}>{title}</h3>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="list">
-          {(provided: DroppableProvided) => (
-            <ul className={classes.list} {...provided.droppableProps} ref={provided.innerRef}>
-              {tasks.map(({ id, name }, idx) => {
-                return (
-                  <Draggable key={id} draggableId={id} index={idx}>
-                    {(provided: DraggableProvided) => (
-                      <li
-                        className={classes.list__item}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        {name}
-                      </li>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </ul>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+    <Draggable draggableId={column.id} index={index}>
+      {(provided) => (
+        <div
+          className={classes.column}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <h2 className={classes.title}>{column.title}</h2>
+          <Droppable droppableId={column.id}>
+            {(provided, snapshot) => (
+              <div
+                className={snapshot.isDraggingOver ? classes.list__active : classes.list}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {tasks.map((task, idx) => (
+                  <Task key={task.id} task={task} index={idx} />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
+      )}
+    </Draggable>
   );
 };
-
 export default Column;

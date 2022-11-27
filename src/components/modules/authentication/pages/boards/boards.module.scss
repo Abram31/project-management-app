@@ -2,19 +2,34 @@
     max-width: 1280px;
     margin: 24px auto;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 12px;
+}
+
 .list {
     margin-top: 32px;
+    min-height: 205px;
+    width: 220px;
+    &__active {
+        margin-top: 32px;
+        min-height: 205px;
+        width: 220px;
+        background-color: blue;
+    }
 }
 
 .list__item {
-    width: 150px;
     height: 50px;
     margin-top: 12px;
+    padding: 15px;
     border: 1px solid #5a5a5a;
     display: flex;
     align-items: center;
