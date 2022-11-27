@@ -11,20 +11,27 @@ import module from './ModalWindowNewBoard.module.scss';
 interface ModalWindowNewBoardProps {
   onClick: MouseEventHandler<HTMLDivElement>;
   closeModal: () => void;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const ModalWindowNewBoard = ({ onClick, closeModal }: ModalWindowNewBoardProps) => {
+export const ModalWindowNewBoard = ({
+  onClick,
+  closeModal,
+  setLoading,
+}: ModalWindowNewBoardProps) => {
   const { register, getValues } = useForm();
   const dispatch = useAppDispatch();
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const { board_description, board_title } = getValues();
+    setLoading(true);
     fetchRequest({
       method: 'POST',
       URL: URLS.boards,
       token: localStorage.getItem('token')!,
       bodyParams: { title: board_title, description: board_description },
     }).then(({ description, title, id }: BorderData) => {
+      setLoading(false);
       dispatch(setBoard({ title: title, description: description, id: id }));
     });
     closeModal();

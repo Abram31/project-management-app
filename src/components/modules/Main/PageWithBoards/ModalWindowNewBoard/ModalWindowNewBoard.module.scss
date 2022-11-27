@@ -9,10 +9,11 @@
     bottom: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background: rgba(215, 210, 210, 0.262);
     z-index: 2;
     min-height: 100%;
+    padding: 6rem 2rem 2rem 2rem;
 
     .modal_window {
         display: flex;

@@ -34,7 +34,11 @@ export const Button = ({
         border: borderColor && '1px solid',
         color: colorText,
       }}
-      onClick={handleLogin || handleLogout || onClick}
+      onClick={(event) => {
+        handleLogin && handleLogin();
+        handleLogout && handleLogout();
+        onClick && onClick(event);
+      }}
     >
       {title}
     </NavLink>
