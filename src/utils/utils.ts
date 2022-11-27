@@ -9,7 +9,7 @@ export const updateToast = (toastId: Id, message: string, type: TypeOptions) => 
       isLoading: false,
       autoClose: 3000,
     });
-  }, 100);
+  }, 500);
 };
 
 export function getDecodeToken(token: string) {
@@ -21,7 +21,5 @@ export function getDecodeToken(token: string) {
 }
 
 export function getLocalStorage(item: string) {
-  return localStorage.getItem(item) !== null
-    ? JSON.stringify(localStorage.getItem(item) || '')
-    : '';
+  return localStorage.getItem(item) !== null ? localStorage.getItem(item) || '' : '';
 }

@@ -1,16 +1,14 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignIn.module.scss';
 import InputField from '../../../common/inputField/InputField';
 import { ERROR_TEXT, REGEX, ROUTES, URLS } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
-import { toast } from 'react-toastify';
-import { updateToast } from 'utils/utils';
-import { useAppDispatch } from 'hooks/hooks';
-import { setUserData } from 'store/authorizationSlice';
+import { useAppDispatch, useAppSelector } from 'hooks/hooks';
+import { setUser } from 'store/authorizationSlice';
 import Preloader from '../../../common/preloader/Preloader';
 
-interface ISignInData {
+export interface ISignInData {
   login: string;
   password: string;
 }
@@ -18,11 +16,11 @@ function SignIn() {
   const dispatch = useAppDispatch();
   const [formChanged, setFormChanged] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { status } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<ISignInData>({
     defaultValues: {
       login: '',
@@ -33,41 +31,16 @@ function SignIn() {
 
   const handleFormSubmit: SubmitHandler<ISignInData> = async (data) => {
     setFormChanged(false);
-    setLoading(true);
-    const toastAuth = toast.loading('Please wait...', {
-      position: toast.POSITION.TOP_CENTER,
-      closeButton: true,
-      autoClose: false,
-    });
-
-    fetch(URLS.signin, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        if (response.ok) {
-          setLoading(false);
-          dispatch(setUserData(data.token));
-          reset();
-          updateToast(toastAuth, 'You have successfully logged in!', 'success');
-        } else {
-          throw data;
-        }
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.statusCode === 403) {
-          updateToast(toastAuth, error.message, 'error');
-        } else {
-          updateToast(toastAuth, 'Something went wrong. Please try again.', 'error');
-        }
-      });
+    dispatch(setUser(data));
   };
+
+  useEffect(() => {
+    if (status === 'loading') {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [status]);
 
   const handleFormChange = () => {
     setFormChanged(true);

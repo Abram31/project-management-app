@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import Boards from 'components/modules/authentication/pages/boards/Boards';
-import EditProfile from 'components/modules/authentication/pages/edit-profile/EditProfile';
 import PrivateRoutes from 'components/private-routes/PrivateRoutes';
 import { Header } from 'components/modules/Header/Header';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
@@ -13,6 +12,12 @@ import SignIn from 'components/modules/authentication/pages/signIn/SignIn';
 import SignUp from 'components/modules/authentication/pages/signUp/SignUp';
 import { WelcomPage } from 'components/modules/WelcomPage/WelcomPage';
 import { Footer } from 'components/modules/Footer/Footer';
+import Profile from 'components/modules/profile/Profile';
+
+const getDateFormatted = (date: Date) => {
+  const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+  return `${month} ${date.getDate()}, ${date.getFullYear()}`;
+};
 
 function App() {
   const { userExist } = useAuthUser();
@@ -42,7 +47,7 @@ function App() {
         />
         <Route element={<PrivateRoutes />}>
           <Route path={ROUTES.boards} element={<Boards />} />
-          <Route path={ROUTES.edit} element={<EditProfile />} />
+          <Route path={ROUTES.edit} element={<Profile />} />
         </Route>
       </Routes>
       <Footer />
