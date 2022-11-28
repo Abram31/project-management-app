@@ -28,8 +28,8 @@ export const Button = ({
   const [active, setActive] = useState(false);
   const location = useLocation();
   useEffect(() => {
-    const adress = pathLink.split('/').slice(-1)[0];
-    const currentAdress = location.pathname.slice(1);
+    const adress = pathLink;
+    const currentAdress = location.pathname;
     adress === currentAdress ? setActive(true) : setActive(false);
   }, [location, pathLink]);
   return (
