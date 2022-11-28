@@ -24,12 +24,13 @@ export const ModalWindowNewBoard = ({
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
     const { board_description, board_title } = getValues();
+
     setLoading(true);
     fetchRequest({
       method: 'POST',
       URL: URLS.boards,
       token: localStorage.getItem('token')!,
-      bodyParams: { title: board_title, description: board_description },
+      bodyParams: { title: board_title || ' ', description: board_description || ' ' },
     }).then(({ description, title, id }: BorderData) => {
       setLoading(false);
       dispatch(setBoard({ title: title, description: description, id: id }));
