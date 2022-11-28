@@ -23,11 +23,11 @@
 
             .photo {
                 max-width: 15rem;
+                max-height: 10rem;
                 border-radius: 2rem;
                 transition: 1s;
 
                 &:hover {
-                    transform: rotateZ(10deg);
                     cursor: pointer;
                 }
 

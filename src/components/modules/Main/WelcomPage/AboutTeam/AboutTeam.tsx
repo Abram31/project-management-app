@@ -10,7 +10,7 @@ export const AboutTeam = () => {
         {Object.entries(members).map((item, index) => {
           return (
             <div key={`${item[0] + index}`} className={module.member}>
-              <img className={module.photo} src="https://i.ibb.co/y5R2xNm/mister-bin.jpg" alt="" />
+              <img className={module.photo} src={item[1].avatar} alt="" />
               <span className={module.name}>{item[1].name}</span>
               <p className={module.member_description}>{item[1].description}</p>
               <div className={module.wrapper_social_links}>
