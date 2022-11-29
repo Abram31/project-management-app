@@ -4,6 +4,7 @@ import { fetchRequest } from 'fetch/fetchRequest';
 import { useAppDispatch } from 'hooks/hooks';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { removeBoard, setBoards, StateData } from 'store/boardsSlice';
 import { Board } from './Board/Board';
 import { ModalWindowNewBoard } from './ModalWindowNewBoard/ModalWindowNewBoard';
@@ -70,12 +71,14 @@ export const PageWIthBoards = () => {
           {boards &&
             Object.entries(boards).map((board, index) => {
               return (
-                <Board
-                  key={board[0] + index}
-                  descriptionBoard={board[1]}
-                  nameBoard={board[0]}
-                  onClick={onClickDelete}
-                />
+                <Link key={board[0]} to={`/boards/${board[0]}`}>
+                  <Board
+                    key={board[0] + index}
+                    descriptionBoard={board[1]}
+                    nameBoard={board[0]}
+                    onClick={onClickDelete}
+                  />
+                </Link>
               );
             })}
         </div>

@@ -2,10 +2,11 @@ import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import { TaskType } from '../single-board/data';
+import { MyTaskType } from '../single-board/SingleBoard';
 
 import classes from '../boards.module.scss';
 
-const Task = ({ task, index }: { task: TaskType; index: number }) => {
+const Task = ({ task, index }: { task: MyTaskType; index: number }) => {
   return (
     <Draggable key={task.id} draggableId={task.id} index={index}>
       {(provided) => (
@@ -15,7 +16,7 @@ const Task = ({ task, index }: { task: TaskType; index: number }) => {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          {task.content}
+          {task.title}
         </div>
       )}
     </Draggable>
