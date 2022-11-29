@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinkGithub } from './LinkGithub/LinkGithub';
 import module from './Footer.module.scss';
-import { members } from '../WelcomPage/AboutTeam/members';
+import { members } from '../Main/WelcomPage/AboutTeam/members';
 
 export const Footer = () => {
   return (

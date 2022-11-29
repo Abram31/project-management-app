@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import module from './ChangeLang.module.scss';
 
-export const ChangeLang = () => {
+interface ChangeLangProps {
+  onHandleClick: MouseEventHandler<HTMLElement>;
+}
+export const ChangeLang = ({ onHandleClick }: ChangeLangProps) => {
   const [lang, setLang] = useState(true);
   return (
-    <span className={module.change_lang} onClick={() => setLang(!lang)}>
+    <span
+      className={module.change_lang}
+      onClick={(event) => {
+        setLang(!lang);
+        onHandleClick(event);
+      }}
+    >
       {lang ? 'EN' : 'RU'}
     </span>
   );

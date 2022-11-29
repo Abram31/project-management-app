@@ -7,7 +7,7 @@ export const ROUTES = {
 export const URLS = {
   signup: 'https://react-final-task.herokuapp.com/signup',
   signin: 'https://react-final-task.herokuapp.com/signin',
-  users: 'https://react-final-task.herokuapp.com/users',
+  boards: 'https://react-final-task.herokuapp.com/boards',
 };
 export const REGEX = {
   name: /^[a-zA-Zа-яА-Я\-\']{2}[a-zA-Zа-яА-Я \-\']{0,}$/,

@@ -1,0 +1,29 @@
+@import '../../../../utils/scss/mixins.scss';
+
+.page_with_boards {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 1rem;
+
+
+    .title_boards {
+        @include title-page
+    }
+
+    .boards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 1rem;
+        padding: 0 0 5rem 0;
+
+        @media(max-width:688px) {
+            justify-content: space-around;
+        }
+    }
+        @media(max-width:400px) {
+            padding: 1rem 1rem 4rem 1rem;
+        }
+
+}

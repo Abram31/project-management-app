@@ -1,0 +1,24 @@
+@import "../../../../../utils/scss/mixins.scss";
+
+.boards__board {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 13rem;
+    height: 7rem;
+    border-radius: .3rem;
+    padding: .5rem;
+    gap: .5rem;
+    @include box-shadow;
+
+    .board__title {
+        text-align: center;
+    }
+
+    .board__description {}
+
+    .wrapper__button_delete {
+        align-self: flex-end;
+    }
+
+}
