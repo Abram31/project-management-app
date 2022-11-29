@@ -142,7 +142,7 @@ button:focus,
 select:focus {
   outline: none !important;
 }
-.root {
+main {
   min-height: 100vh;
   padding: 4rem 0;
   display: flex;
@@ -175,7 +175,6 @@ body {
   background-color: var(--main-bg);
   color: var(--main-color);
   font-size: 16px;
-  padding: 4rem 0 0 0;
 }
 .active_modal {
   overflow: hidden;
