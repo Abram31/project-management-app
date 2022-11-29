@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignUp.module.scss';
 import InputField from '../../../common/inputField/InputField';
-import { ERROR_TEXT, REGEX, ROUTES, URLS } from 'constants/constants';
+import { ERROR_TEXT, REGEX, REQUEST_ERRORS, ROUTES, URLS } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
@@ -61,7 +61,7 @@ function SignUp() {
         if (error.statusCode === 409) {
           updateToast(toastAuth, error.message, 'error');
         } else {
-          updateToast(toastAuth, 'Something went wrong. Please try again.', 'error');
+          updateToast(toastAuth, REQUEST_ERRORS.common, 'error');
         }
       });
   };
