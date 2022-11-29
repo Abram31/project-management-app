@@ -50,22 +50,19 @@ const SingleBoard = () => {
     });
     some.then((data) => {
       const myData: IMyData = {
-        columns: data.columns,
+        columns: data.columns.sort((a: MyColumnType, b: MyColumnType) => a.order - b.order),
         // tasks: data.columns.map((column: MyColumnType) => column.tasks),
         // columnOrder: data.columns.map((column: MyColumnType) => `column-${column.order}`),
-        columnOrder: data.columns.map((column: MyColumnType, idx: number) => idx + 1),
       };
-
-      data.columns.map((column: MyColumnType, idx: number) => (column.order = idx + 1));
 
       updateData(myData);
     });
   }, [id]);
 
-  useEffect(() => {
-    console.log('worked');
-    if (data) data.columnOrder = data.columns.map(({ order }) => order);
-  }, [data]);
+  //   useEffect(() => {
+  //     console.log('worked');
+  //     if (data) data.columnOrder = data.columns.map(({ order }) => order);
+  //   }, [data]);
 
   // useEffect(() => {
   //   const some = fetchRequest({
@@ -97,86 +94,60 @@ const SingleBoard = () => {
 
   const handleDragEnd = (result: DropResult) => {
     const { source, destination, type } = result;
-    if (!destination) {
-      return;
-    }
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
-      return;
-    }
+    // if (!destination) {
+    //   return;
+    // }
+    // if (destination.droppableId === source.droppableId && destination.index === source.index) {
+    //   return;
+    // }
 
-    if (type === 'column') {
-      const columnOrder = [...(data!.columnOrder as number[])];
-      const [removed] = columnOrder.splice(source.index, 1);
-      columnOrder.splice(destination.index, 0, removed);
+    if (type === 'column' && data && destination) {
+      const columns = [...data.columns];
 
-      // Tries
-      // data!.columns.map((column: MyColumnType, idx: number) => (column.order = idx + 1));
-
-      // const newColumns = data!.columns.map(({ ...args }, idx, arr) => {
-      //   return { ...args, order: idx + 1 };
-      // });
-
-      const newColumns = columnOrder.map((order, idx) => {
-        return (data!.columns[order - 1].order = idx + 1);
-      });
-
-      console.log(newColumns);
-      console.log(data!.columns);
-      console.log('columnOrder', data!.columnOrder);
-
-      // Tries
+      const col = columns.splice(source.index, 1);
+      columns.splice(destination.index, 0, col[0]);
+      columns.map((column: MyColumnType, idx: number) => (column.order = idx + 1));
 
       const newData = {
-        columns: data!.columns,
-        columnOrder: newColumns,
-      };
-
-      updateData(newData as IMyData);
-      return;
-    }
-
-    const [start] = data!.columns.filter((column) => column.id === source.droppableId);
-    const [end] = data!.columns.filter((column) => column.id === destination.droppableId);
-
-    if (start === end) {
-      const newColumns = [...data!.columns];
-      const newTasks = start.tasks;
-      const columnId = newColumns.findIndex((column) => column.id === start.id);
-      const [removedTask] = newTasks.splice(source.index, 1);
-      newTasks.splice(destination.index, 0, removedTask);
-
-      start.tasks = newTasks;
-      newColumns.splice(columnId, 1, start);
-
-      const newData = {
-        ...data,
-        columns: newColumns,
+        columns,
       };
 
       updateData(newData);
       return;
     }
-
-    const newColumns = [...data!.columns];
-    const newStartTasks = start.tasks;
-    const newEndTasks = end.tasks;
-    const [removedTask] = newStartTasks.splice(source.index, 1);
-    newEndTasks.splice(destination.index, 0, removedTask);
-
-    const startColumnId = newColumns.findIndex((column) => column.id === start.id);
-    const endColumnId = newColumns.findIndex((column) => column.id === end.id);
-
-    start.tasks = newStartTasks;
-    end.tasks = newEndTasks;
-    newColumns.splice(startColumnId, 1, start);
-    newColumns.splice(endColumnId, 1, end);
-
-    const newData = {
-      ...data,
-      columns: newColumns,
-    };
-
-    updateData(newData);
+    // const [start] = data!.columns.filter((column) => column.id === source.droppableId);
+    // const [end] = data!.columns.filter((column) => column.id === destination.droppableId);
+    // if (start === end) {
+    //   const newColumns = [...data!.columns];
+    //   const newTasks = start.tasks;
+    //   const columnId = newColumns.findIndex((column) => column.id === start.id);
+    //   const [removedTask] = newTasks.splice(source.index, 1);
+    //   newTasks.splice(destination.index, 0, removedTask);
+    //   start.tasks = newTasks;
+    //   newColumns.splice(columnId, 1, start);
+    //   const newData = {
+    //     ...data,
+    //     columns: newColumns,
+    //   };
+    //   updateData(newData);
+    //   return;
+    // }
+    // const newColumns = [...data!.columns];
+    // const newStartTasks = start.tasks;
+    // const newEndTasks = end.tasks;
+    // const [removedTask] = newStartTasks.splice(source.index, 1);
+    // newEndTasks.splice(destination.index, 0, removedTask);
+    // const startColumnId = newColumns.findIndex((column) => column.id === start.id);
+    // const endColumnId = newColumns.findIndex((column) => column.id === end.id);
+    // start.tasks = newStartTasks;
+    // end.tasks = newEndTasks;
+    // newColumns.splice(startColumnId, 1, start);
+    // newColumns.splice(endColumnId, 1, end);
+    // const newData = {
+    //   ...data,
+    //   columns: newColumns,
+    // };
+    // updateData(newData);
   };
 
   return (
@@ -185,11 +156,12 @@ const SingleBoard = () => {
         {(provided) => (
           <div className={classes.container} {...provided.droppableProps} ref={provided.innerRef}>
             {data &&
-              data.columnOrder!.map((order, idx) => {
-                const [column] = data.columns.filter((col) => col.order === order);
-                const tasks = column.tasks;
+              data.columns!.map((column, idx) => {
+                // const [column] = data.columns.filter((col) => col.order === order);
+                // console.log(column.title, ':', column.id, ': ', idx);
+                // const tasks = column.tasks;
 
-                return <Column key={column.id} column={column} tasks={tasks} index={idx} />;
+                return <Column key={column.id} column={column} tasks={column.tasks} index={idx} />;
               })}
             {provided.placeholder}
           </div>

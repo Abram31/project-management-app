@@ -1,5 +1,5 @@
 import React from 'react';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable, DraggableProps } from 'react-beautiful-dnd';
 
 import { ColumnType, TaskType } from '../single-board/data';
 import { MyColumnType, MyTaskType } from '../single-board/SingleBoard';
@@ -8,7 +8,7 @@ import Task from '../task/Task';
 
 import classes from '../boards.module.scss';
 
-type Props = { column: MyColumnType; tasks: MyTaskType[]; index: number };
+type Props = { column: MyColumnType; tasks: MyTaskType[]; index: DraggableProps['index'] };
 
 const Column = ({ column, tasks, index }: Props) => {
   return (
