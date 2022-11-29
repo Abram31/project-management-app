@@ -1,12 +1,13 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignIn.module.scss';
 import InputField from '../../../common/inputField/InputField';
-import { ERROR_TEXT, REGEX, ROUTES, URLS } from 'constants/constants';
+import { ERROR_TEXT, REGEX, ROUTES } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { setUser } from 'store/authorizationSlice';
 import Preloader from '../../../common/preloader/Preloader';
+import { toast } from 'react-toastify';
 
 export interface ISignInData {
   login: string;
@@ -15,7 +16,6 @@ export interface ISignInData {
 function SignIn() {
   const dispatch = useAppDispatch();
   const [formChanged, setFormChanged] = useState(false);
-  const [loading, setLoading] = useState(false);
   const { status } = useAppSelector((state) => state.user);
   const {
     register,
@@ -31,16 +31,19 @@ function SignIn() {
 
   const handleFormSubmit: SubmitHandler<ISignInData> = async (data) => {
     setFormChanged(false);
-    dispatch(setUser(data));
-  };
-
-  useEffect(() => {
-    if (status === 'loading') {
-      setLoading(true);
-    } else {
-      setLoading(false);
+    const result = await dispatch(setUser(data));
+    if (result.meta.requestStatus === 'fulfilled') {
+      toast.success('You have successfully logged in!', {
+        position: toast.POSITION.TOP_CENTER,
+        closeButton: true,
+      });
+    } else if (result.meta.requestStatus === 'rejected') {
+      toast.error(result.payload, {
+        position: toast.POSITION.TOP_CENTER,
+        closeButton: true,
+      });
     }
-  }, [status]);
+  };
 
   const handleFormChange = () => {
     setFormChanged(true);
@@ -97,7 +100,7 @@ function SignIn() {
           </a>
         </p>
       </form>
-      {loading && <Preloader />}
+      {status === 'loading' && <Preloader />}
     </div>
   );
 }

@@ -32,3 +32,7 @@ export const TOASTIFY_SETTINGS = {
   pauseOnHover: true as const,
   theme: 'dark' as const,
 };
+export const REQUEST_ERRORS = {
+  relogin: 'Please log in again.',
+  common: 'Something went wrong. Please try again.',
+};

@@ -1,10 +1,8 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ISignInData } from 'components/modules/authentication/pages/signIn/SignIn';
-import { URLS } from 'constants/constants';
-import { Id, toast } from 'react-toastify';
-import { getDecodeToken, getLocalStorage, updateToast } from '../utils/utils';
-
-let toastLogin: Id;
+import { REQUEST_ERRORS, URLS } from 'constants/constants';
+import { toast } from 'react-toastify';
+import { getDecodeToken, getLocalStorage, request } from '../utils/utils';
 interface IUserData {
   token: string;
   userId: string;
@@ -12,6 +10,7 @@ interface IUserData {
   iat: string;
   name: string;
   status: string;
+  relogin: boolean;
 }
 
 const token = getLocalStorage('token');
@@ -24,12 +23,13 @@ const initialState: IUserData = {
   iat: userData.iat || '',
   name: '',
   status: '',
+  relogin: false,
 };
 
 export const setUser = createAsyncThunk<string, ISignInData, { rejectValue: string }>(
   'user/createUser',
   async function (data, { rejectWithValue }) {
-    return await fetch(URLS.signin, {
+    return request(URLS.signin, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -37,19 +37,12 @@ export const setUser = createAsyncThunk<string, ISignInData, { rejectValue: stri
       },
       body: JSON.stringify(data),
     })
-      .then(async (response) => {
-        const datares = await response.json();
-        if (response.ok) {
-          return datares.token as string;
-        } else {
-          throw datares;
-        }
-      })
+      .then((datares) => datares.token)
       .catch((error) => {
         if (error.statusCode === 403) {
           return rejectWithValue(error.message);
         } else {
-          return rejectWithValue('Something went wrong. Please try again.');
+          return rejectWithValue(REQUEST_ERRORS.common);
         }
       });
   }
@@ -60,28 +53,20 @@ export const getUserName = createAsyncThunk<
   undefined,
   { rejectValue: string; state: { user: IUserData } }
 >('user/getUserName', async function (_, { rejectWithValue, dispatch, getState }) {
-  return await fetch(`${URLS.users}/${getState().user.userId}`, {
+  return request(`${URLS.users}/${getState().user.userId}`, {
     method: 'GET',
     headers: {
       accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${getState().user.token}`,
     },
   })
-    .then(async (response) => {
-      const datares = await response.json();
-      if (response.ok) {
-        return datares.name as string;
-      } else {
-        throw datares;
-      }
-    })
+    .then((datares) => datares.name)
     .catch((error) => {
       if (error.statusCode === 403) {
         dispatch(removeUserData());
-        return rejectWithValue('Please log in again.');
+        return rejectWithValue(REQUEST_ERRORS.relogin);
       } else {
-        return rejectWithValue('Something went wrong.');
+        return rejectWithValue('An error occurred while loading the data.');
       }
     });
 });
@@ -97,21 +82,17 @@ const authorizationSlice = createSlice({
       state.iat = '';
       localStorage.removeItem('token');
     },
+    setRelogin: (state, action) => {
+      state.relogin = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(setUser.pending, (state) => {
       state.status = 'loading';
-      toastLogin = toast.loading('Please wait...', {
-        position: toast.POSITION.TOP_CENTER,
-        closeButton: true,
-        autoClose: false,
-      });
     });
     builder.addCase(setUser.fulfilled, (state, action) => {
-      console.log(action);
       state.status = 'fulfilled';
-      updateToast(toastLogin, 'You have successfully logged in!', 'success');
       state.token = action.payload;
       localStorage.setItem('token', action.payload);
       const data = getDecodeToken(action.payload) as IUserData;
@@ -120,8 +101,7 @@ const authorizationSlice = createSlice({
       state.iat = data.iat || '';
     });
     builder.addCase(setUser.rejected, (state, action) => {
-      state.status = 'error';
-      updateToast(toastLogin, action.payload || '', 'error');
+      state.status = 'rejected';
     });
     builder.addCase(getUserName.pending, (state) => {
       state.status = 'loading';
@@ -131,11 +111,11 @@ const authorizationSlice = createSlice({
       state.name = action.payload;
     });
     builder.addCase(getUserName.rejected, (state, action) => {
-      state.status = 'error';
-      toast.error(action.payload || '');
+      state.status = 'rejected';
+      toast.error(action.payload || '', { toastId: 'getUserName' });
     });
   },
 });
 
-export const { removeUserData } = authorizationSlice.actions;
+export const { removeUserData, setRelogin } = authorizationSlice.actions;
 export default authorizationSlice;

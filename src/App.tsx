@@ -14,11 +14,6 @@ import { WelcomPage } from 'components/modules/WelcomPage/WelcomPage';
 import { Footer } from 'components/modules/Footer/Footer';
 import Profile from 'components/modules/profile/Profile';
 
-const getDateFormatted = (date: Date) => {
-  const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
-  return `${month} ${date.getDate()}, ${date.getFullYear()}`;
-};
-
 function App() {
   const { userExist } = useAuthUser();
   const dispatch = useAppDispatch();

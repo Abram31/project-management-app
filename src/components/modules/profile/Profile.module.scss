@@ -1,8 +1,58 @@
-.form__box {
-  min-height: 100vh;
+.profile {
+  margin: 5rem 0;
+}
+
+.profile__inner {
+  display: flex;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-top: 60px;
+}
+
+.profile__title {
+  text-align: center;
+  font-size: 32px;
+  color: var(--title-color);
+  font-weight: 500;
+}
+
+.profile__info {
+  margin-top: 30px;
+}
+
+.profile__info_item {
+  margin-top: 10px;
+}
+
+.profile__info_item span {
+  font-size: 18px;
+  margin-left: 5px;
+  color: var(--title-color);
+}
+
+.profile__delete_btn {
+  margin-top: 30px;
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  padding: 10px 15px;
+  color: var(--main-color);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  z-index: 1;
+  border: 1px solid var(--main-color);
+  transition: color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+}
+.profile__delete_btn:hover {
+  border-color: rgb(165, 40, 40);
+  color: rgb(165, 40, 40);
+}
+
+.form__box {
+  flex-basis: 470px;
+  margin-left: 50px;
 }
 
 .form {
@@ -14,7 +64,6 @@
   align-items: center;
   background-color: var(--black-color);
   border-radius: 4px;
-  margin: 5rem 0;
 }
 
 .form__title {

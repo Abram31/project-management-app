@@ -142,6 +142,12 @@ button:focus,
 select:focus {
   outline: none !important;
 }
+.root {
+  min-height: 100vh;
+  padding: 4rem 0;
+  display: flex;
+  flex-direction: column;
+}
 
 :root {
   --main-color: #8e8e8e;
@@ -168,7 +174,6 @@ body {
   background-color: var(--main-bg);
   color: var(--main-color);
   font-size: 16px;
-  padding: 4rem 0;
 }
 
 .Toastify__toast.Toastify__toast-theme--dark {
@@ -178,6 +183,5 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

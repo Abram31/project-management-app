@@ -5,7 +5,7 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export function useAuthUser() {
-  const { token, userId, login, iat } = useAppSelector((state) => state.user);
+  const { token, userId, login, iat, relogin } = useAppSelector((state) => state.user);
 
   return {
     user: {
@@ -13,6 +13,7 @@ export function useAuthUser() {
       userId,
       login,
       iat,
+      relogin,
     },
     userExist: token && userId && login && iat,
   };
