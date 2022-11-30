@@ -9,7 +9,7 @@ export const updateToast = (toastId: Id, message: string, type: TypeOptions) => 
       isLoading: false,
       autoClose: 3000,
     });
-  }, 100);
+  }, 400);
 };
 
 export function getDecodeToken(token: string) {
@@ -21,7 +21,28 @@ export function getDecodeToken(token: string) {
 }
 
 export function getLocalStorage(item: string) {
-  return localStorage.getItem(item) !== null
-    ? JSON.stringify(localStorage.getItem(item) || '')
-    : '';
+  return localStorage.getItem(item) !== null ? localStorage.getItem(item) || '' : '';
+}
+
+export async function request(input: URL | RequestInfo, init: RequestInit) {
+  const token = getLocalStorage('token');
+  const headers: HeadersInit = new Headers({
+    ...init.headers,
+  });
+
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  return await fetch(input, {
+    ...init,
+    headers,
+  }).then(async (response) => {
+    const datares = await response.json();
+    if (response.ok) {
+      return datares;
+    } else {
+      throw datares;
+    }
+  });
 }

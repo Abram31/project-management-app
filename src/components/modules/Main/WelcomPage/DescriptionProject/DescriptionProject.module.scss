@@ -1,12 +1,53 @@
 @import '../../../../../utils/scss/constants.scss';
 
 .description_project {
+    display: flex;
+    flex-direction: row-reverse;
     color: $font-color-header;
-    width: 70%;
+    width: 90%;
     height: fit-content;
-    padding: 2rem;
+    padding: 1rem;
     text-align: justify;
     margin: 0 auto;
     border-radius: 1rem;
-    background-color: $background-color-header;
+    height: 460px;
+    gap: 1rem;
+
+    @media(max-width: $width-table) {
+        justify-content: center;
+    }
+
+
+    .img {
+        width: 50%;
+        background-image: url(../../../../../../public/image/welcom-page/hands.svg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        @media(max-width: $width-table) {
+            display: none;
+        }
+    }
+
+    .description {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 50%;
+        line-height: 1.5rem;
+
+        @media(max-width: $width-table) {
+            width: 90%;
+        }
+    }
+
+    .description_title {
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .description_text {
+        font-size: 1.3rem;
+    }
 }

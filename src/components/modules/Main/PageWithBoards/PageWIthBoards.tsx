@@ -1,4 +1,5 @@
 import { Button } from 'components/modules/common/Button/Button';
+import Preloader from 'components/modules/common/preloader/Preloader';
 import { URLS } from 'constants/constants';
 import { fetchRequest } from 'fetch/fetchRequest';
 import { useAppDispatch } from 'hooks/hooks';
@@ -19,6 +20,7 @@ export interface StateBoardProps {
 
 export const PageWIthBoards = () => {
   const [stateModalNewBoard, setStateModalNewBoard] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const boards = useSelector((state: StateData) => state.boarders);
 
@@ -47,12 +49,14 @@ export const PageWIthBoards = () => {
     (event.target as HTMLDivElement).id === 'modal_wrapper' && closeAddBoard();
   };
   useEffect(() => {
+    setLoading(true);
     fetchRequest({
       method: 'GET',
       token: localStorage.getItem('token')!,
       URL: URLS.boards,
     }).then((data) => {
       dispatch(setBoards(data));
+      setLoading(false);
     });
   }, [dispatch]);
 
@@ -82,9 +86,14 @@ export const PageWIthBoards = () => {
               );
             })}
         </div>
+        {loading && <Preloader />}
       </section>
       {stateModalNewBoard && (
-        <ModalWindowNewBoard onClick={onClickCloseAddBoard} closeModal={closeAddBoard} />
+        <ModalWindowNewBoard
+          onClick={onClickCloseAddBoard}
+          closeModal={closeAddBoard}
+          setLoading={setLoading}
+        />
       )}
     </>
   );

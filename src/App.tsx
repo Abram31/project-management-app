@@ -1,15 +1,13 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
+import Profile from 'components/modules/profile/Profile';
+import PrivateRoutes from 'components/private-routes/PrivateRoutes';
+import { Header } from 'components/modules/Header/Header';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
 import { removeUserData } from 'store/authorizationSlice';
 import { ToastContainer } from 'react-toastify';
-import { ROUTES, TOASTIFY_SETTINGS } from 'constants/constants';
-
-import Boards from 'components/modules/authentication/pages/boards/Boards';
-import PrivateRoutes from 'components/private-routes/PrivateRoutes';
-import EditProfile from 'components/modules/authentication/pages/edit-profile/EditProfile';
-import { Header } from 'components/modules/Header/Header';
+import { RouteMain, ROUTES, TOASTIFY_SETTINGS } from 'constants/constants';
 import SignIn from 'components/modules/authentication/pages/signIn/SignIn';
 import SignUp from 'components/modules/authentication/pages/signUp/SignUp';
 import { WelcomPage } from 'components/modules/Main/WelcomPage/WelcomPage';
@@ -28,7 +26,7 @@ function App() {
   };
   const handleLogout = () => {
     dispatch(removeUserData());
-    navigate('/');
+    navigate(RouteMain);
   };
 
   return (
@@ -36,7 +34,7 @@ function App() {
       <Header handleLogin={handleLogin} handleLogout={handleLogout} />
       <Main>
         <Routes>
-          <Route path="/" element={<WelcomPage />} />
+          <Route path={RouteMain} element={<WelcomPage />} />
           <Route
             path={ROUTES.signin}
             element={!userExist ? <SignIn /> : <Navigate to={ROUTES.boards} />}
@@ -48,7 +46,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
             <Route path={`${ROUTES.boards}/:boardId`} element={<SingleBoard />} />
-            <Route path={ROUTES.edit} element={<EditProfile />} />
+            <Route path={ROUTES.edit} element={<Profile />} />
           </Route>
         </Routes>
       </Main>
