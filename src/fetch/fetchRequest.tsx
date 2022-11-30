@@ -2,7 +2,14 @@ interface fetchRequestProps {
   URL: string;
   method: 'GET' | 'DELETE' | 'POST' | 'PUT';
   token: string;
-  bodyParams?: { title: string; description?: string; userId?: string; order?: number };
+  bodyParams?: {
+    title: string;
+    description?: string;
+    userId?: string;
+    order?: number;
+    boardId?: string;
+    columnId?: string;
+  };
 }
 
 export const fetchRequest = async ({ URL, method, token, bodyParams }: fetchRequestProps) => {

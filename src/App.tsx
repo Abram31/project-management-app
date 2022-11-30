@@ -47,7 +47,7 @@ function App() {
           />
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
-            <Route path={`${ROUTES.boards}/:id`} element={<SingleBoard />} />
+            <Route path={`${ROUTES.boards}/:boardId`} element={<SingleBoard />} />
             <Route path={ROUTES.edit} element={<EditProfile />} />
           </Route>
         </Routes>
