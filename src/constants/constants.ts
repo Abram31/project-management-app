@@ -10,6 +10,7 @@ export const URLS = {
   signup: 'https://react-final-task.herokuapp.com/signup',
   signin: 'https://react-final-task.herokuapp.com/signin',
   boards: 'https://react-final-task.herokuapp.com/boards',
+  users: 'https://react-final-task.herokuapp.com/users',
 };
 export const REGEX = {
   name: /^[a-zA-Zа-яА-Я\-\']{2}[a-zA-Zа-яА-Я \-\']{0,}$/,
@@ -33,4 +34,8 @@ export const TOASTIFY_SETTINGS = {
   draggable: true as const,
   pauseOnHover: true as const,
   theme: 'dark' as const,
+};
+export const REQUEST_ERRORS = {
+  relogin: 'Please log in again.',
+  common: 'Something went wrong. Please try again.',
 };

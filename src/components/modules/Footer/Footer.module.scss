@@ -1,38 +1,39 @@
 @import '../../../utils/scss/constants.scss';
 
 .footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 4rem;
+  background-color: $background-color-header;
+  color: $font-color-header;
+  transition: 0.4s;
+  padding: 0 1rem;
+  z-index: 5;
+
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+  .wrapper_links {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
-    align-items: center;
-    justify-content: space-around;
-    min-height: 4rem;
-    background-color: $background-color-header;
-    color: $font-color-header;
-    transition: .4s;
-    padding: 0 1rem;
+  }
 
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  .rsschool_link {
+    background-image: url(https://abram31.github.io/rslang/assets/3e68b9909d8bfe9415e0.svg);
+    width: 30%;
+    height: 3rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: invert(0.5);
+    transition: 0.4s;
 
-    .wrapper_links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem;
+    &:hover {
+      filter: $hover-color-links;
     }
-
-    .rsschool_link {
-        background-image: url(https://abram31.github.io/rslang/assets/3e68b9909d8bfe9415e0.svg);
-        width: 30%;
-        height: 3rem;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        filter: invert(.5);
-        transition: .4s;
-
-        &:hover {
-            filter: $hover-color-links;
-        }
-    }
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
-import EditProfile from 'components/modules/authentication/pages/edit-profile/EditProfile';
+import Profile from 'components/modules/profile/Profile';
 import PrivateRoutes from 'components/private-routes/PrivateRoutes';
 import { Header } from 'components/modules/Header/Header';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
@@ -44,7 +44,7 @@ function App() {
           />
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
-            <Route path={ROUTES.edit} element={<EditProfile />} />
+            <Route path={ROUTES.edit} element={<Profile />} />
           </Route>
         </Routes>
       </Main>
