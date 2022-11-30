@@ -1,4 +1,4 @@
-import { ROUTES } from 'constants/constants';
+import { RouteMain, ROUTES } from 'constants/constants';
 import { useAuthUser } from 'hooks/hooks';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -28,7 +28,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
   return (
     <header className={`${module.header} ${prevScroll && module.header__active}`}>
       <div className={module.wrapper_logo}>
-        <NavLink className={module.logo} to="/">
+        <NavLink className={module.logo} to={RouteMain}>
           Project Management System
         </NavLink>{' '}
       </div>
@@ -53,7 +53,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             fullBackground="rgba(204, 124, 54, 1)"
           />
           <Button
-            pathLink={''}
+            pathLink={RouteMain}
             onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Sign out"

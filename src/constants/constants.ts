@@ -1,8 +1,10 @@
+export const RouteMain = '/project-management-app';
+
 export const ROUTES = {
-  signup: '/signup',
-  signin: '/signin',
-  boards: '/boards',
-  edit: '/edit',
+  signup: RouteMain + '/signup',
+  signin: RouteMain + '/signin',
+  boards: RouteMain + '/boards',
+  edit: RouteMain + '/edit',
 };
 export const URLS = {
   signup: 'https://react-final-task.herokuapp.com/signup',
