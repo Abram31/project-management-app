@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/project-management-app/static/css/main.ebfe8689.css",
-    "main.js": "/project-management-app/static/js/main.4f33cb8a.js",
+    "main.css": "/project-management-app/static/css/main.2bb62bec.css",
+    "main.js": "/project-management-app/static/js/main.c69c4cad.js",
     "static/media/hands.svg": "/project-management-app/static/media/hands.777326869c06ab3ff3b0.svg",
     "static/media/burger.svg": "/project-management-app/static/media/burger.53b6b28ef64a96fc02d6.svg",
     "index.html": "/project-management-app/index.html",
     "static/media/basket-delete.svg": "/project-management-app/static/media/basket-delete.11643680c3e01cb0588a.svg",
-    "main.ebfe8689.css.map": "/project-management-app/static/css/main.ebfe8689.css.map",
-    "main.4f33cb8a.js.map": "/project-management-app/static/js/main.4f33cb8a.js.map"
+    "main.2bb62bec.css.map": "/project-management-app/static/css/main.2bb62bec.css.map",
+    "main.c69c4cad.js.map": "/project-management-app/static/js/main.c69c4cad.js.map"
   },
   "entrypoints": [
-    "static/css/main.ebfe8689.css",
-    "static/js/main.4f33cb8a.js"
+    "static/css/main.2bb62bec.css",
+    "static/js/main.c69c4cad.js"
   ]
 }
