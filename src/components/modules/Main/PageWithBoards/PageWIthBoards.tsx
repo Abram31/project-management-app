@@ -1,6 +1,7 @@
 import { Button } from 'components/modules/common/Button/Button';
 import Preloader from 'components/modules/common/preloader/Preloader';
 import { URLS } from 'constants/constants';
+import { ROUTES } from 'constants/constants';
 import { fetchRequest } from 'fetch/fetchRequest';
 import { useAppDispatch } from 'hooks/hooks';
 import React, { MouseEventHandler, useEffect, useState } from 'react';
@@ -75,7 +76,7 @@ export const PageWIthBoards = () => {
           {boards &&
             Object.entries(boards).map((board, index) => {
               return (
-                <Link key={board[0]} to={`/boards/${board[0]}`}>
+                <Link key={board[0]} to={`${ROUTES.boards}/${board[0]}`}>
                   <Board
                     key={board[0] + index}
                     descriptionBoard={board[1]}
