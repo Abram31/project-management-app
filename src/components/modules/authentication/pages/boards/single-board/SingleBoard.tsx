@@ -8,10 +8,12 @@ import { URLS } from 'constants/constants';
 import Column from '../columns/Column';
 
 import classes from '../boards.module.scss';
-import { useAuthUser } from 'hooks/hooks';
+import { useAppDispatch, useAuthUser } from 'hooks/hooks';
+import { Columns, setColumn, setColumns } from 'store/boardsSlice';
 
 export interface IData {
   columns: ColumnType[];
+  idBoard?: string;
 }
 
 export type ColumnType = { id: string; title: string; order: number; tasks: TaskType[] };
@@ -24,22 +26,23 @@ export type TaskType = {
   files?: [];
 };
 
-export const getData = (
+export const getData = async (
   boardId: string | undefined,
   updateData: React.Dispatch<React.SetStateAction<IData | null>>
 ) => {
-  const request = fetchRequest({
+  const request = await fetchRequest({
     URL: `${URLS.boards}/${boardId}`,
     method: 'GET',
     token: localStorage.getItem('token')!,
   });
-  request.then((result) => {
-    const myData: IData = {
-      columns: result.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
-    };
+  const myData: IData = {
+    columns: request.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
+  };
+  setColumns({ columns: { ...request.columns }, idBoard: boardId });
 
-    updateData(myData);
-  });
+  updateData(myData);
+  // }
+  return request;
 };
 
 const updateColumns = (
@@ -89,9 +92,12 @@ const SingleBoard = () => {
   const { user } = useAuthUser();
   const [data, updateData] = useState<IData | null>(null);
   const [columnName, setColumnName] = useState<string>('');
-
+  const dispatch = useAppDispatch();
+  // setColumns({ columns: { ...result.columns }, idBoard: boardId });
   useEffect(() => {
-    getData(boardId, updateData);
+    getData(boardId, updateData).then((data) =>
+      dispatch(setColumns({ columns: { ...data.columns }, idBoard: boardId }))
+    );
   }, [boardId]);
 
   const handleAddColumn = () => {
@@ -103,7 +109,10 @@ const SingleBoard = () => {
         title: columnName,
       },
     });
-    request.then(() => getData(boardId, updateData));
+    request.then(({ id, order, title }: { id: string; order: string; title: string }) => {
+      getData(boardId, updateData);
+      dispatch(setColumn({ boardId: boardId!, columnId: id, title: title, order }));
+    });
     setColumnName('');
   };
 
