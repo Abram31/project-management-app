@@ -1,0 +1,30 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 12px;
+    padding: 16px 0 16px;
+
+    width: 296px;
+    background-color: #16191C;
+
+    border: solid 2px #293138;
+    border-radius: 4px;
+}
+
+.list {
+    min-height: 212px;
+    width: 80%;
+    &__active {
+        min-height: 212px;
+        width: 80%;
+        background-color: #656565;
+    }
+}
+
+.button {
+    width: 80%;
+    margin-top: 16px;
+    height: 40px;
+}

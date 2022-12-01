@@ -9,8 +9,9 @@ import { getData } from '../single-board/SingleBoard';
 
 import { ColumnType, TaskType } from '../single-board/SingleBoard';
 import Task from '../task/Task';
+import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
 
-import classes from '../boards.module.scss';
+import classes from './column.module.scss';
 
 type Props = {
   column: ColumnType;
@@ -67,9 +68,8 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
               </div>
             )}
           </Droppable>
-          <div className={classes.form}>
-            <input type="text" value={taskName} onChange={handleTaskNameChange} />
-            <button onClick={handleAddTask}>Add task</button>
+          <div className={classes.button}>
+            <FormBtn onClick={handleAddTask}>Add task</FormBtn>
           </div>
         </div>
       )}

@@ -4,13 +4,16 @@ import { DragDropContext, DraggableProps, Droppable, DropResult } from 'react-be
 
 import { fetchRequest } from 'fetch/fetchRequest';
 import { URLS } from 'constants/constants';
-
-import Column from '../columns/Column';
-
-import classes from '../boards.module.scss';
 import { useAuthUser } from 'hooks/hooks';
 
+import Column from '../column/Column';
+import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
+
+import classes from './singleBoard.module.scss';
+
 export interface IData {
+  boardTitle: string;
+  boardDescription: string;
   columns: ColumnType[];
 }
 
@@ -35,6 +38,8 @@ export const getData = (
   });
   request.then((result) => {
     const myData: IData = {
+      boardTitle: result.title,
+      boardDescription: result.description,
       columns: result.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
     };
 
@@ -84,6 +89,17 @@ const updateTasks = (
   });
 };
 
+// const getColumn = (boardId?: string) => {
+//   const request = fetchRequest({
+//     URL: `${URLS.boards}/${boardId}`,
+//     method: 'GET',
+//     token: localStorage.getItem('token')!,
+//   });
+//   request.then((result) => {
+//     console.log(result);
+//   });
+// };
+
 const SingleBoard = () => {
   const { boardId } = useParams();
   const { user } = useAuthUser();
@@ -131,6 +147,7 @@ const SingleBoard = () => {
       columns.map(({ id, title }, idx) => updateColumns(boardId, id, title, idx + 1));
 
       const newData = {
+        ...data,
         columns,
       };
 
@@ -164,6 +181,7 @@ const SingleBoard = () => {
       columns.splice(columnId, 1, start);
 
       const newData = {
+        ...data,
         columns,
       };
 
@@ -200,6 +218,8 @@ const SingleBoard = () => {
     columns.splice(endColumnId, 1, end);
 
     const newData = {
+      boardTitle: data!.boardTitle,
+      boardDescription: data!.boardDescription,
       columns,
     };
 
@@ -207,32 +227,38 @@ const SingleBoard = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        {(provided) => (
-          <div className={classes.container} {...provided.droppableProps} ref={provided.innerRef}>
-            <div>
-              <input type="text" value={columnName} onChange={handleColumnNameChange} />
-              <button onClick={handleAddColumn}>Add column</button>
+    <div className={classes.container}>
+      <h2 className={classes.title}>{data && data.boardTitle}</h2>
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <Droppable droppableId="all-columns" direction="horizontal" type="column">
+          {(provided) => (
+            <div
+              className={classes.columns__container}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {data &&
+                data.columns!.map((column, idx) => {
+                  return (
+                    <Column
+                      key={column.id}
+                      column={column}
+                      tasks={column.tasks}
+                      index={idx}
+                      boardId={boardId}
+                      updateData={updateData}
+                    />
+                  );
+                })}
+              {provided.placeholder}
+              <div className={classes.column__button}>
+                <FormBtn onClick={handleAddColumn}>Add column</FormBtn>
+              </div>
             </div>
-            {data &&
-              data.columns!.map((column, idx) => {
-                return (
-                  <Column
-                    key={column.id}
-                    column={column}
-                    tasks={column.tasks}
-                    index={idx}
-                    boardId={boardId}
-                    updateData={updateData}
-                  />
-                );
-              })}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </div>
   );
 };
 

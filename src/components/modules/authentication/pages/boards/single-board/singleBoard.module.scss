@@ -1,5 +1,30 @@
+@import '../../../../../../utils/scss/mixins.scss';
+
 .container {
+    max-width: 1280px;
+    margin: 24px auto;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+}
+
+.title {
+    @include title-page;
+}
+
+.columns__container {
+    margin: 24px auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 400;
+}
+
+.button {
+    margin: 4px 12px;
+    width: 196px;
+    height: 40px;
 }
