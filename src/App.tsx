@@ -12,6 +12,7 @@ import SignIn from 'components/modules/authentication/pages/signIn/SignIn';
 import SignUp from 'components/modules/authentication/pages/signUp/SignUp';
 import { WelcomPage } from 'components/modules/Main/WelcomPage/WelcomPage';
 import { Footer } from 'components/modules/Footer/Footer';
+import SingleBoard from 'components/modules/authentication/pages/boards/single-board/SingleBoard';
 import { Main } from 'components/modules/Main/Main';
 import { PageWIthBoards } from 'components/modules/Main/PageWithBoards/PageWIthBoards';
 
@@ -44,6 +45,7 @@ function App() {
           />
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
+            <Route path={`${ROUTES.boards}/:boardId`} element={<SingleBoard />} />
             <Route path={ROUTES.edit} element={<Profile />} />
           </Route>
         </Routes>
