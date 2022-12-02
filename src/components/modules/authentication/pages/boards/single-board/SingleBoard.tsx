@@ -9,8 +9,7 @@ import Column from '../columns/Column';
 
 import classes from '../boards.module.scss';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
-import { setColumn, setColumns } from 'store/boardsSlice';
-import { idText } from 'typescript';
+import { setColumn } from 'store/boardsSlice';
 
 export interface IData {
   columns: ColumnType[];
@@ -119,7 +118,7 @@ const SingleBoard = () => {
     setColumnName(e.target.value);
   };
 
-  const handleDragEnd = (result: DropResult) => {
+  const handleDragEnd = async (result: DropResult) => {
     const { source, destination, type, draggableId } = result;
 
     if (!destination) {
@@ -143,7 +142,6 @@ const SingleBoard = () => {
       };
 
       updateData(newData);
-      // dispatch(setColumns({ columns: { ...newData.columns }, idBoard: boardId }));
 
       return;
     }
