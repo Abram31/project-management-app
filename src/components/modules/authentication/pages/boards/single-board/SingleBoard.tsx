@@ -9,7 +9,8 @@ import Column from '../columns/Column';
 
 import classes from '../boards.module.scss';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
-import { Columns, setColumn, setColumns } from 'store/boardsSlice';
+import { setColumn, setColumns } from 'store/boardsSlice';
+import { idText } from 'typescript';
 
 export interface IData {
   columns: ColumnType[];
@@ -35,13 +36,14 @@ export const getData = async (
     method: 'GET',
     token: localStorage.getItem('token')!,
   });
-  const myData: IData = {
-    columns: request.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
-  };
-  setColumns({ columns: { ...request.columns }, idBoard: boardId });
 
-  updateData(myData);
-  // }
+  if (request) {
+    const myData: IData = {
+      columns: request.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
+    };
+    updateData(myData!);
+  }
+
   return request;
 };
 
@@ -93,11 +95,8 @@ const SingleBoard = () => {
   const [data, updateData] = useState<IData | null>(null);
   const [columnName, setColumnName] = useState<string>('');
   const dispatch = useAppDispatch();
-  // setColumns({ columns: { ...result.columns }, idBoard: boardId });
   useEffect(() => {
-    getData(boardId, updateData).then((data) =>
-      dispatch(setColumns({ columns: { ...data.columns }, idBoard: boardId }))
-    );
+    getData(boardId, updateData);
   }, [boardId]);
 
   const handleAddColumn = () => {
@@ -144,6 +143,8 @@ const SingleBoard = () => {
       };
 
       updateData(newData);
+      // dispatch(setColumns({ columns: { ...newData.columns }, idBoard: boardId }));
+
       return;
     }
 

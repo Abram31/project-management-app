@@ -32,10 +32,6 @@ interface SetColumnsAction {
   order: string;
   columnId: string;
 }
-interface SetTaskAction {
-  task: string;
-  boardId: string;
-}
 
 const boardSlice = createSlice({
   name: 'board',
@@ -64,7 +60,7 @@ const boardSlice = createSlice({
     },
 
     setColumns: (state, action: PayloadAction<IData>) => {
-      console.log(action.payload.columns);
+      state[action.payload.idBoard!] = { ...state[action.payload.idBoard!], columns: {} };
 
       state[action.payload.idBoard!].columns = action.payload.columns;
     },
@@ -81,15 +77,7 @@ const boardSlice = createSlice({
           },
         },
       };
-      // state[action.payload.boardId].columns = {
-      //   columnName: action.payload.title,
-      // };
     },
-    // setTask: (state, action: PayloadAction<SetColumnsAction>) => {
-    //   state[action.payload.boardId].columns = {
-    //     columnName: action.payload.title,
-    //   };
-    // },
   },
 });
 
