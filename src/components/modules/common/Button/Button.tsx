@@ -30,7 +30,7 @@ export const Button = ({
   useEffect(() => {
     const adress = pathLink;
     const currentAdress = location.pathname;
-    adress === currentAdress ? setActive(true) : setActive(false);
+    adress && adress === currentAdress ? setActive(true) : setActive(false);
   }, [location, pathLink]);
   return (
     <NavLink
