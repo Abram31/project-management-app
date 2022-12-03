@@ -1,5 +1,7 @@
 import { Button } from 'components/modules/common/Button/Button';
+import { ButtonDeleteBasket } from 'components/modules/common/ButtonDeleteBasket/ButtonDeleteBasket';
 import Preloader from 'components/modules/common/preloader/Preloader';
+import { Сonfirmation } from 'components/modules/common/Сonfirmation/Сonfirmation';
 import { URLS } from 'constants/constants';
 import { ROUTES } from 'constants/constants';
 import { fetchRequest } from 'fetch/fetchRequest';
@@ -22,6 +24,9 @@ export interface StateBoardProps {
 export const PageWIthBoards = () => {
   const [stateModalNewBoard, setStateModalNewBoard] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [confirmation, setСonfirmation] = useState(false);
+  const [boardID, setBoardID] = useState('');
+
   const dispatch = useAppDispatch();
   const boards = useSelector((state: StateData) => state.boarders);
 
@@ -30,15 +35,27 @@ export const PageWIthBoards = () => {
     body.classList.remove('active_modal'), setStateModalNewBoard(!stateModalNewBoard);
   };
   const onClickDelete: MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
+    setСonfirmation(true);
     const board = event.nativeEvent.composedPath()[2] as HTMLDivElement;
     const id = (board.closest('div') as HTMLHRElement).id;
+    setBoardID(id);
+  };
 
-    fetchRequest({
-      method: 'DELETE',
-      token: localStorage.getItem('token')!,
-      URL: `${URLS.boards}/${id}`,
-    });
-    dispatch(removeBoard(id));
+  const onClickСonfirmation: MouseEventHandler<HTMLButtonElement> = (event) => {
+    const element = event.target as HTMLButtonElement;
+
+    if (element.id === 'unconfirm') {
+      setСonfirmation(false);
+    } else {
+      fetchRequest({
+        method: 'DELETE',
+        token: localStorage.getItem('token')!,
+        URL: `${URLS.boards}/${boardID}`,
+      });
+      dispatch(removeBoard(boardID));
+      setСonfirmation(false);
+    }
   };
 
   const onClickAddBoard: MouseEventHandler<HTMLAnchorElement> = () => {
@@ -76,14 +93,19 @@ export const PageWIthBoards = () => {
           {boards &&
             Object.entries(boards).map((board, index) => {
               return (
-                <Link key={board[0]} to={`${ROUTES.boards}/${board[0]}`}>
-                  <Board
-                    key={board[0] + index}
-                    descriptionBoard={board[1]}
-                    nameBoard={board[0]}
-                    onClick={onClickDelete}
-                  />
-                </Link>
+                <div className={module.wrapper_board_button} key={board[0]} id={board[1].id}>
+                  <Link key={board[0]} to={`${ROUTES.boards}/${board[0]}`}>
+                    <Board
+                      key={board[0] + index}
+                      descriptionBoard={board[1]}
+                      nameBoard={board[0]}
+                      onClick={onClickDelete}
+                    />
+                  </Link>
+                  <div className={module.wrapper__button_delete}>
+                    <ButtonDeleteBasket onClick={onClickDelete} />
+                  </div>
+                </div>
               );
             })}
         </div>
@@ -96,6 +118,7 @@ export const PageWIthBoards = () => {
           setLoading={setLoading}
         />
       )}
+      {confirmation && <Сonfirmation onClick={onClickСonfirmation} />}
     </>
   );
 };
