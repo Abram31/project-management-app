@@ -8,7 +8,7 @@ import { request, updateToast } from 'utils/utils';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../common/inputField/InputField';
 import FormBtn from '../authentication/formBtn/FormBtn';
-import { REGEX, URLS } from 'constants/constants';
+import { REGEX, URLS, UserStatus } from 'constants/constants';
 import styles from './Profile.module.scss';
 
 import '../../../i18n/config';
@@ -211,7 +211,7 @@ function Profile() {
           </form>
         </div>
       </div>
-      {(status === 'loading' || loading) && <Preloader />}
+      {(status === UserStatus.loading || loading) && <Preloader />}
     </div>
   );
 }

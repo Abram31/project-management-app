@@ -31,6 +31,7 @@
     "reloginErr": "Please log in again.",
     "commonErr": "Something went wrong. Please try again.",
     "registered": "You have successfully registered!",
-    "logged": "You have successfully logged in!"
+    "logged": "You have successfully logged in!",
+    "getUserNameErr": "An error occurred while loading the data."
   }
 }

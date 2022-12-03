@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignIn.module.scss';
 import InputField from '../../../common/inputField/InputField';
-import { REGEX, ROUTES } from 'constants/constants';
+import { REGEX, ROUTES, UserStatus } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { setUser } from 'store/authorizationSlice';
@@ -34,12 +34,12 @@ function SignIn() {
   const handleFormSubmit: SubmitHandler<ISignInData> = async (data) => {
     setFormChanged(false);
     const result = await dispatch(setUser(data));
-    if (result.meta.requestStatus === 'fulfilled') {
+    if (result.meta.requestStatus === UserStatus.fulfilled) {
       toast.success(t('request.logged'), {
         position: toast.POSITION.TOP_CENTER,
         closeButton: true,
       });
-    } else if (result.meta.requestStatus === 'rejected') {
+    } else if (result.meta.requestStatus === UserStatus.rejected) {
       toast.error(result.payload, {
         position: toast.POSITION.TOP_CENTER,
         closeButton: true,
@@ -103,7 +103,7 @@ function SignIn() {
           </a>
         </p>
       </form>
-      {status === 'loading' && <Preloader />}
+      {status === UserStatus.loading && <Preloader />}
     </div>
   );
 }

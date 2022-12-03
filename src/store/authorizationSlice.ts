@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { ISignInData } from 'components/modules/authentication/pages/signIn/SignIn';
-import { REQUEST_ERRORS, URLS } from 'constants/constants';
+import { URLS, UserStatus } from 'constants/constants';
+import { t } from 'i18next';
 import { toast } from 'react-toastify';
 import { getDecodeToken, getLocalStorage, request } from '../utils/utils';
 interface IUserData {
@@ -42,7 +43,7 @@ export const setUser = createAsyncThunk<string, ISignInData, { rejectValue: stri
         if (error.statusCode === 403) {
           return rejectWithValue(error.message);
         } else {
-          return rejectWithValue(REQUEST_ERRORS.common);
+          return rejectWithValue(t('translation:request.commonErr'));
         }
       });
   }
@@ -64,9 +65,9 @@ export const getUserName = createAsyncThunk<
     .catch((error) => {
       if (error.statusCode === 403) {
         dispatch(removeUserData());
-        return rejectWithValue(REQUEST_ERRORS.relogin);
+        return rejectWithValue(t('translation:request.reloginErr'));
       } else {
-        return rejectWithValue('An error occurred while loading the data.');
+        return rejectWithValue(t('translation:request.getUserNameErr'));
       }
     });
 });
@@ -89,10 +90,10 @@ const authorizationSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(setUser.pending, (state) => {
-      state.status = 'loading';
+      state.status = UserStatus.loading;
     });
     builder.addCase(setUser.fulfilled, (state, action) => {
-      state.status = 'fulfilled';
+      state.status = UserStatus.fulfilled;
       state.token = action.payload;
       localStorage.setItem('token', action.payload);
       const data = getDecodeToken(action.payload) as IUserData;
@@ -101,17 +102,17 @@ const authorizationSlice = createSlice({
       state.iat = data.iat || '';
     });
     builder.addCase(setUser.rejected, (state, action) => {
-      state.status = 'rejected';
+      state.status = UserStatus.rejected;
     });
     builder.addCase(getUserName.pending, (state) => {
-      state.status = 'loading';
+      state.status = UserStatus.loading;
     });
     builder.addCase(getUserName.fulfilled, (state, action) => {
-      state.status = 'fulfilled';
+      state.status = UserStatus.fulfilled;
       state.name = action.payload;
     });
     builder.addCase(getUserName.rejected, (state, action) => {
-      state.status = 'rejected';
+      state.status = UserStatus.rejected;
       toast.error(action.payload || '', { toastId: 'getUserName' });
     });
   },

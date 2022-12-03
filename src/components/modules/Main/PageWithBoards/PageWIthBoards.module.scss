@@ -22,8 +22,28 @@
             justify-content: space-around;
         }
     }
-        @media(max-width:400px) {
-            padding: 1rem 1rem 4rem 1rem;
-        }
 
+    @media(max-width:400px) {
+        padding: 1rem 1rem 4rem 1rem;
+    }
+
+    .wrapper_board_button {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 13rem;
+        min-height: 7rem;
+        border-radius: .3rem;
+        padding: .5rem;
+        gap: 1rem;
+        @include box-shadow;
+
+        .wrapper__button_delete {
+            align-self: flex-end;
+            position: absolute;
+            bottom: 0rem;
+            right: 0rem;
+        }
+    }
 }

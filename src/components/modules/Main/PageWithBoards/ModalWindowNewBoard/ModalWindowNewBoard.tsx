@@ -33,7 +33,7 @@ export const ModalWindowNewBoard = ({
       bodyParams: { title: board_title || ' ', description: board_description || ' ' },
     }).then(({ description, title, id }: BorderData) => {
       setLoading(false);
-      dispatch(setBoard({ title: title, description: description, id: id }));
+      dispatch(setBoard({ title: title, description: description, id: id, columns: {} }));
     });
     closeModal();
   };
