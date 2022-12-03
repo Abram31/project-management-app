@@ -1,5 +1,6 @@
 import { RouteMain, ROUTES } from 'constants/constants';
 import { useAuthUser } from 'hooks/hooks';
+import { changeLanguage } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Button } from '../common/Button/Button';
@@ -18,6 +19,12 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
 
   const handleClickBurger = () => {
     setBurgerState(!burgerState);
+  };
+
+  const handleLanguageClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const lang = e.currentTarget.innerText.toLowerCase();
+    changeLanguage(lang);
+    localStorage.setItem('lang', lang);
   };
 
   useEffect(() => {
@@ -60,7 +67,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             fullBackground="#d84315"
             handleLogout={handleLogout}
           />
-          <ChangeLang onHandleClick={handleClickBurger} />
+          <ChangeLang onHandleClick={handleLanguageClick} />
         </div>
       ) : (
         <div
@@ -84,7 +91,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             fullBackground="rgba(204, 124, 54, 1)"
             handleLogin={handleLogin}
           />
-          <ChangeLang onHandleClick={handleClickBurger} />
+          <ChangeLang onHandleClick={handleLanguageClick} />
         </div>
       )}
       <Burger onClick={handleClickBurger} stateBurger={burgerState} />

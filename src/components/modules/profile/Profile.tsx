@@ -8,15 +8,18 @@ import { request, updateToast } from 'utils/utils';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputField from '../common/inputField/InputField';
 import FormBtn from '../authentication/formBtn/FormBtn';
-import { ERROR_TEXT, REGEX, REQUEST_ERRORS, URLS } from 'constants/constants';
+import { REGEX, URLS } from 'constants/constants';
 import styles from './Profile.module.scss';
 
+import '../../../i18n/config';
+import { useTranslation } from 'react-i18next';
 interface IProfileData {
   name: string;
   login: string;
   password: string;
 }
 function Profile() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const { user } = useAuthUser();
   const [loading, setLoading] = useState(false);
@@ -49,7 +52,7 @@ function Profile() {
 
   async function handleDeleteAccount() {
     setLoading(true);
-    const toastDelete = toast.loading('Please wait...', {
+    const toastDelete = toast.loading(t('request.wait'), {
       position: toast.POSITION.TOP_CENTER,
       closeButton: true,
       autoClose: false,
@@ -66,7 +69,7 @@ function Profile() {
       .then(async (response) => {
         if (response.ok) {
           dispatch(removeUserData());
-          updateToast(toastDelete, 'You account successfully deleted!', 'success');
+          updateToast(toastDelete, t('request.accountDeleted'), 'success');
           setLoading(false);
         } else {
           throw await response.json();
@@ -77,11 +80,11 @@ function Profile() {
         if (error.statusCode === 403) {
           dispatch(removeUserData());
           dispatch(setRelogin(true));
-          updateToast(toastDelete, REQUEST_ERRORS.relogin, 'error');
+          updateToast(toastDelete, t('request.reloginErr'), 'error');
         } else if (error.statusCode === 404) {
           updateToast(toastDelete, error.message, 'error');
         } else {
-          updateToast(toastDelete, REQUEST_ERRORS.common, 'error');
+          updateToast(toastDelete, t('request.commonErr'), 'error');
         }
       });
   }
@@ -89,7 +92,7 @@ function Profile() {
   const handleFormSubmit: SubmitHandler<IProfileData> = async (data) => {
     setFormChanged(false);
     setLoading(true);
-    const toastAuth = toast.loading('Please wait...', {
+    const toastAuth = toast.loading(t('request.wait'), {
       position: toast.POSITION.TOP_CENTER,
       closeButton: true,
       autoClose: false,
@@ -104,7 +107,7 @@ function Profile() {
     })
       .then(() => {
         setLoading(false);
-        updateToast(toastAuth, 'You data changed! Please log in again.', 'success');
+        updateToast(toastAuth, t('request.dataChanged'), 'success');
         dispatch(removeUserData());
         dispatch(setRelogin(true));
       })
@@ -113,9 +116,9 @@ function Profile() {
         if (error.statusCode === 403) {
           dispatch(removeUserData());
           dispatch(setRelogin(true));
-          updateToast(toastAuth, REQUEST_ERRORS.relogin, 'error');
+          updateToast(toastAuth, t('request.reloginErr'), 'error');
         } else {
-          updateToast(toastAuth, REQUEST_ERRORS.common, 'error');
+          updateToast(toastAuth, t('request.commonErr'), 'error');
         }
       });
   };
@@ -126,18 +129,18 @@ function Profile() {
 
   return (
     <div className={styles.profile}>
-      <h1 className={styles.profile__title}>Profile</h1>
+      <h1 className={styles.profile__title}>{t('profile')}</h1>
       <div className={styles.profile__inner}>
         <div>
           <ul className={styles.profile__info}>
             <li className={styles.profile__info_item}>
-              Name: <span>{name}</span>
+              {t('name')}: <span>{name}</span>
             </li>
             <li className={styles.profile__info_item}>
-              Login: <span>{user.login}</span>
+              {t('login')}: <span>{user.login}</span>
             </li>
             <li className={styles.profile__info_item}>
-              Id: <span>{user.userId}</span>
+              {t('id')}: <span>{user.userId}</span>
             </li>
           </ul>
           <button
@@ -145,7 +148,7 @@ function Profile() {
             type="button"
             onClick={handleDeleteAccount}
           >
-            Delete account
+            {t('deleteAccount')}
           </button>
         </div>
         <div className={styles.form__box}>
@@ -154,14 +157,14 @@ function Profile() {
             onChange={handleFormChange}
             className={styles.form}
           >
-            <h1 className={styles.form__title}>Edit Profile</h1>
+            <h1 className={styles.form__title}>{t('editProfile')}</h1>
             <div className={styles.form_item}>
-              <label className={styles.form_item__label}>Name</label>
+              <label className={styles.form_item__label}>{t('name')}</label>
               <div className={styles.input__box}>
                 <InputField
                   {...register('name', {
-                    required: ERROR_TEXT.required,
-                    pattern: { value: REGEX.name, message: ERROR_TEXT.userName },
+                    required: t('errors.requiredErr'),
+                    pattern: { value: REGEX.name, message: t('errors.userNameErr') },
                   })}
                   error={errors.name?.message}
                   name="name"
@@ -170,12 +173,12 @@ function Profile() {
               </div>
             </div>
             <div className={styles.form_item}>
-              <label className={styles.form_item__label}>Login</label>
+              <label className={styles.form_item__label}>{t('login')}</label>
               <div className={styles.input__box}>
                 <InputField
                   {...register('login', {
-                    required: ERROR_TEXT.required,
-                    pattern: { value: REGEX.login, message: ERROR_TEXT.login },
+                    required: t('errors.requiredErr'),
+                    pattern: { value: REGEX.login, message: t('errors.loginErr') },
                   })}
                   error={errors.login?.message}
                   name="login"
@@ -184,14 +187,14 @@ function Profile() {
               </div>
             </div>
             <div className={styles.form_item}>
-              <label className={styles.form_item__label}>Password</label>
+              <label className={styles.form_item__label}>{t('password')}</label>
               <div className={styles.input__box}>
                 <InputField
                   {...register('password', {
-                    required: ERROR_TEXT.required,
+                    required: t('errors.requiredErr'),
                     pattern: {
                       value: REGEX.password,
-                      message: ERROR_TEXT.password,
+                      message: t('errors.passwordErr'),
                     },
                   })}
                   error={errors.password?.message}
@@ -202,7 +205,7 @@ function Profile() {
             </div>
             <div className={styles.form_btn__box}>
               <FormBtn disabled={!formChanged || !isValid} type="submit">
-                Save
+                {t('save')}
               </FormBtn>
             </div>
           </form>

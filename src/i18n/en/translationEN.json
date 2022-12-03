@@ -1,0 +1,36 @@
+{
+  "profile": "Profile",
+  "editProfile": "Edit Profile",
+  "name": "Name",
+  "login": "Login",
+  "password": "Password",
+  "save": "Save",
+  "id": "id",
+  "deleteAccount": "Delete account",
+  "SignUp": "Sign Up",
+  "SignInHere": "Sign in here",
+  "AlreadyHaveAnAccount": "Already have an account",
+  "SignIn": "Sign In",
+  "DontHaveAnAccountYet": "Don't have an account yet",
+  "SignUpHere": "Sign up here",
+  "descriptionProject": "You can create and customize multiple views by filtering, sorting, and grouping. Adding custom fields to track metadata specific to your work. The project provides flexible features you can customize to your team’s needs and processes.",
+  "ProjectManagementSystem": "Project Management System",
+  "OurTeam": "Our Team",
+  "YourBoards": "Your Boards",
+  "NewBoard": "New Board",
+  "errors": {
+    "requiredErr": "This field is required.",
+    "userNameErr": "Must be min 2 characters(only letters, apostrophes, hyphens).",
+    "loginErr": "Must be 2-20 characters(only latin letters, numbers, special characters, hyphens).",
+    "passwordErr": "Must be 8-20 characters(least 1 latin letter, 1 number)."
+  },
+  "request": {
+    "wait": "Please wait...",
+    "accountDeleted": "You account successfully deleted!",
+    "dataChanged": "You data changed! Please log in again.",
+    "reloginErr": "Please log in again.",
+    "commonErr": "Something went wrong. Please try again.",
+    "registered": "You have successfully registered!",
+    "logged": "You have successfully logged in!"
+  }
+}

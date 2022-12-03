@@ -2,18 +2,20 @@ import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignIn.module.scss';
 import InputField from '../../../common/inputField/InputField';
-import { ERROR_TEXT, REGEX, ROUTES } from 'constants/constants';
+import { REGEX, ROUTES } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { useAppDispatch, useAppSelector } from 'hooks/hooks';
 import { setUser } from 'store/authorizationSlice';
 import Preloader from '../../../common/preloader/Preloader';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 export interface ISignInData {
   login: string;
   password: string;
 }
 function SignIn() {
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [formChanged, setFormChanged] = useState(false);
   const { status } = useAppSelector((state) => state.user);
@@ -33,7 +35,7 @@ function SignIn() {
     setFormChanged(false);
     const result = await dispatch(setUser(data));
     if (result.meta.requestStatus === 'fulfilled') {
-      toast.success('You have successfully logged in!', {
+      toast.success(t('request.logged'), {
         position: toast.POSITION.TOP_CENTER,
         closeButton: true,
       });
@@ -56,14 +58,14 @@ function SignIn() {
         onChange={handleFormChange}
         className={styles.form}
       >
-        <h1 className={styles.form__title}>Sign In</h1>
+        <h1 className={styles.form__title}>{t('SignIn')}</h1>
         <div className={styles.form_item}>
-          <label className={styles.form_item__label}>Login</label>
+          <label className={styles.form_item__label}>{t('login')}</label>
           <div className={styles.input__box}>
             <InputField
               {...register('login', {
-                required: ERROR_TEXT.required,
-                pattern: { value: REGEX.login, message: ERROR_TEXT.userName },
+                required: t('errors.requiredErr'),
+                pattern: { value: REGEX.login, message: t('errors.loginErr') },
               })}
               error={errors.login?.message}
               name="login"
@@ -72,14 +74,14 @@ function SignIn() {
           </div>
         </div>
         <div className={styles.form_item}>
-          <label className={styles.form_item__label}>Password</label>
+          <label className={styles.form_item__label}>{t('password')}</label>
           <div className={styles.input__box}>
             <InputField
               {...register('password', {
-                required: ERROR_TEXT.required,
+                required: t('errors.requiredErr'),
                 pattern: {
                   value: REGEX.password,
-                  message: ERROR_TEXT.password,
+                  message: t('errors.passwordErr'),
                 },
               })}
               error={errors.password?.message}
@@ -90,13 +92,14 @@ function SignIn() {
         </div>
         <div className={styles.form_btn__box}>
           <FormBtn disabled={!formChanged || !!Object.keys(errors).length} type="submit">
-            Sign In
+            {t('SignIn')}
           </FormBtn>
         </div>
         <p className={styles.form__text}>
-          Don&apos;t have an account yet?{' '}
+          {t('DontHaveAnAccountYet')}
+          {'? '}
           <a href={ROUTES.signup} className={styles.form__link}>
-            Sign up here
+            {t('SignUpHere')}
           </a>
         </p>
       </form>

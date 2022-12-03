@@ -2,11 +2,12 @@ import React, { memo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styles from './SignUp.module.scss';
 import InputField from '../../../common/inputField/InputField';
-import { ERROR_TEXT, REGEX, REQUEST_ERRORS, ROUTES, URLS } from 'constants/constants';
+import { REGEX, ROUTES, URLS } from 'constants/constants';
 import FormBtn from '../../formBtn/FormBtn';
 import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
 import Preloader from '../../../common/preloader/Preloader';
+import { useTranslation } from 'react-i18next';
 
 export interface ISignUpData {
   name: string;
@@ -14,6 +15,7 @@ export interface ISignUpData {
   password: string;
 }
 function SignUp() {
+  const { t } = useTranslation();
   const [formChanged, setFormChanged] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
@@ -33,7 +35,7 @@ function SignUp() {
   const handleFormSubmit: SubmitHandler<ISignUpData> = async (data) => {
     setFormChanged(false);
     setLoading(true);
-    const toastAuth = toast.loading('Please wait...', {
+    const toastAuth = toast.loading(t('request.wait'), {
       position: toast.POSITION.TOP_CENTER,
       closeButton: true,
       autoClose: false,
@@ -51,7 +53,7 @@ function SignUp() {
         if (response.ok) {
           setLoading(false);
           reset();
-          updateToast(toastAuth, 'You have successfully registered!', 'success');
+          updateToast(toastAuth, t('request.registered'), 'success');
         } else {
           throw data;
         }
@@ -61,7 +63,7 @@ function SignUp() {
         if (error.statusCode === 409) {
           updateToast(toastAuth, error.message, 'error');
         } else {
-          updateToast(toastAuth, REQUEST_ERRORS.common, 'error');
+          updateToast(toastAuth, t('request.commonErr'), 'error');
         }
       });
   };
@@ -77,14 +79,14 @@ function SignUp() {
         onChange={handleFormChange}
         className={styles.form}
       >
-        <h1 className={styles.form__title}>Sign Up</h1>
+        <h1 className={styles.form__title}>{t('SignUp')}</h1>
         <div className={styles.form_item}>
-          <label className={styles.form_item__label}>Name</label>
+          <label className={styles.form_item__label}>{t('name')}</label>
           <div className={styles.input__box}>
             <InputField
               {...register('name', {
-                required: ERROR_TEXT.required,
-                pattern: { value: REGEX.name, message: ERROR_TEXT.userName },
+                required: t('errors.requiredErr'),
+                pattern: { value: REGEX.name, message: t('errors.userNameErr') },
               })}
               error={errors.name?.message}
               name="name"
@@ -93,12 +95,12 @@ function SignUp() {
           </div>
         </div>
         <div className={styles.form_item}>
-          <label className={styles.form_item__label}>Login</label>
+          <label className={styles.form_item__label}>{t('login')}</label>
           <div className={styles.input__box}>
             <InputField
               {...register('login', {
-                required: ERROR_TEXT.required,
-                pattern: { value: REGEX.login, message: ERROR_TEXT.login },
+                required: t('errors.requiredErr'),
+                pattern: { value: REGEX.login, message: t('errors.loginErr') },
               })}
               error={errors.login?.message}
               name="login"
@@ -107,14 +109,14 @@ function SignUp() {
           </div>
         </div>
         <div className={styles.form_item}>
-          <label className={styles.form_item__label}>Password</label>
+          <label className={styles.form_item__label}>{t('password')}</label>
           <div className={styles.input__box}>
             <InputField
               {...register('password', {
-                required: ERROR_TEXT.required,
+                required: t('errors.requiredErr'),
                 pattern: {
                   value: REGEX.password,
-                  message: ERROR_TEXT.password,
+                  message: t('errors.passwordErr'),
                 },
               })}
               error={errors.password?.message}
@@ -125,13 +127,14 @@ function SignUp() {
         </div>
         <div className={styles.form_btn__box}>
           <FormBtn disabled={!formChanged || !isValid} type="submit">
-            Sign Up
+            {t('SignUp')}
           </FormBtn>
         </div>
         <p className={styles.form__text}>
-          Already have an account?{' '}
+          {t('AlreadyHaveAnAccount')}
+          {'? '}
           <a href={ROUTES.signin} className={styles.form__link}>
-            Sign in here
+            {t('SignInHere')}
           </a>
         </p>
       </form>

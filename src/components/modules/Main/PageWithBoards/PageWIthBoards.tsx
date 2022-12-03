@@ -11,6 +11,7 @@ import { removeBoard, setBoards, StateData } from 'store/boardsSlice';
 import { Board } from './Board/Board';
 import { ModalWindowNewBoard } from './ModalWindowNewBoard/ModalWindowNewBoard';
 import module from './PageWIthBoards.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export interface onClickProps {
   event: MouseEventHandler<HTMLDivElement>;
@@ -20,6 +21,7 @@ export interface StateBoardProps {
 }
 
 export const PageWIthBoards = () => {
+  const { t } = useTranslation();
   const [stateModalNewBoard, setStateModalNewBoard] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
@@ -64,11 +66,11 @@ export const PageWIthBoards = () => {
   return (
     <>
       <section className={module.page_with_boards}>
-        <h3 className={module.title_boards}>Your Boards</h3>
+        <h3 className={module.title_boards}>{t('YourBoards')}</h3>
         <Button
           borderColor="rgba(157, 164, 172, 1)"
           colorText="whitesmoke"
-          title="New Board"
+          title={t('NewBoard')}
           pathLink=""
           onClick={onClickAddBoard}
         />
