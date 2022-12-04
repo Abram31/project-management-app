@@ -143,8 +143,10 @@ select:focus {
   outline: none !important;
 }
 main {
+  max-width: 1280px;
+  margin: 0 auto;
   min-height: 100vh;
-  padding: 4rem 0;
+  padding: 4rem 20px;
   display: flex;
   flex-direction: column;
 }
@@ -171,8 +173,6 @@ main {
 
 body {
   font-family: 'Montserrat', sans-serif;
-  // font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-  //   'Cantarell', 'Fira Sans', 'Droid Sans','Montserrat', 'Helvetica Neue', sans-serif;
   background-color: var(--main-bg);
   color: var(--main-color);
   font-size: 16px;
@@ -205,9 +205,21 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, .2);
+  background: rgba(0, 0, 0, 0.2);
 }
 ::-webkit-scrollbar {
   height: 12px;
   width: 10px;
+}
+
+@media only screen and (max-width: 654px) {
+  main {
+    padding-bottom: 6rem;
+  }
+}
+
+@media only screen and (max-width: 407px) {
+  main {
+    padding-bottom: 9rem;
+  }
 }

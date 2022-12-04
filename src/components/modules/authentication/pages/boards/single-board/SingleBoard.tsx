@@ -6,8 +6,9 @@ import { toast } from 'react-toastify';
 
 import { fetchRequest } from 'fetch/fetchRequest';
 import { ROUTES, URLS } from 'constants/constants';
-import { useAuthUser } from 'hooks/hooks';
+import { useAppDispatch, useAuthUser } from 'hooks/hooks';
 import Preloader from 'components/modules/common/preloader/Preloader';
+import { setColumn } from 'store/boardsSlice';
 
 import Column from '../column/Column';
 import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
@@ -20,6 +21,7 @@ export interface IData {
   boardTitle: string;
   boardDescription: string;
   columns: ColumnType[];
+  idBoard?: string;
 }
 
 export type ColumnType = { id: string; title: string; order: number; tasks: TaskType[] };
@@ -32,24 +34,26 @@ export type TaskType = {
   files?: [];
 };
 
-export const getData = (
+export const getData = async (
   boardId: string | undefined,
   updateData: React.Dispatch<React.SetStateAction<IData | null>>
 ) => {
-  const request = fetchRequest({
+  const request = await fetchRequest({
     URL: `${URLS.boards}/${boardId}`,
     method: 'GET',
     token: localStorage.getItem('token')!,
   });
-  request.then((result) => {
+
+  if (request) {
     const myData: IData = {
-      boardTitle: result.title,
-      boardDescription: result.description,
-      columns: result.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
+      boardTitle: request.title,
+      boardDescription: request.description,
+      columns: request.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
     };
 
-    updateData(myData);
-  });
+    updateData(myData!);
+    return request;
+  }
 };
 
 const updateColumns = (
@@ -101,6 +105,7 @@ const SingleBoard = () => {
   const { boardId } = useParams();
   const { user } = useAuthUser();
   const { register, getValues, reset } = useForm();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     getData(boardId, updateData);
@@ -119,12 +124,17 @@ const SingleBoard = () => {
         title: column_title,
       },
     });
-    request.then(() => getData(boardId, updateData)).then(() => setLoading(false));
+    request
+      .then(({ id, order, title }: { id: string; order: string; title: string }) => {
+        getData(boardId, updateData);
+        dispatch(setColumn({ boardId: boardId!, columnId: id, title: title, order }));
+      })
+      .then(() => setLoading(false));
     toast.success('Column created');
     reset();
   };
 
-  const handleDragEnd = (result: DropResult) => {
+  const handleDragEnd = async (result: DropResult) => {
     const { source, destination, type, draggableId } = result;
 
     if (!destination) {
@@ -149,6 +159,7 @@ const SingleBoard = () => {
       };
 
       updateData(newData);
+
       return;
     }
 

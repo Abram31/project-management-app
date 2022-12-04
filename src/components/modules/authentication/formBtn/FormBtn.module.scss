@@ -1,7 +1,7 @@
 .button {
   background: linear-gradient(90deg, var(--orange), var(--pink-color));
   border: none;
-  font-size: 20px;
+  font-size: 18px;
   height: 100%;
   padding: 0 15px;
   color: #ffffff;
@@ -60,5 +60,10 @@
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+@media only screen and (max-width: 380px) {
+  .button {
+    font-size: 16px;
   }
 }

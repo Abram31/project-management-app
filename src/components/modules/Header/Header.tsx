@@ -1,7 +1,10 @@
 import { RouteMain, ROUTES } from 'constants/constants';
-import { useAuthUser } from 'hooks/hooks';
+import { useAppDispatch, useAuthUser } from 'hooks/hooks';
+import { changeLanguage } from 'i18next';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
+import { setLang } from 'store/localizationSlice';
 import { Button } from '../common/Button/Button';
 import { Burger } from './Burger/Burger';
 import { ChangeLang } from './ChangeLang/ChangeLang';
@@ -12,12 +15,19 @@ export interface HeaderProps {
   handleLogout?: () => void;
 }
 export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
+  const { t } = useTranslation();
   const [prevScroll, setScroll] = useState(false);
   const [burgerState, setBurgerState] = useState(false);
   const { userExist } = useAuthUser();
+  const dispatch = useAppDispatch();
 
   const handleClickBurger = () => {
     setBurgerState(!burgerState);
+  };
+
+  const handleLanguageClick = (lng: string) => {
+    dispatch(setLang(lng));
+    changeLanguage(lng);
   };
 
   useEffect(() => {
@@ -29,7 +39,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
     <header className={`${module.header} ${prevScroll && module.header__active}`}>
       <div className={module.wrapper_logo}>
         <NavLink className={module.logo} to={RouteMain}>
-          Project Management System
+          {t('ProjectManagementSystem')}
         </NavLink>{' '}
       </div>
       {userExist ? (
@@ -42,25 +52,25 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             pathLink={ROUTES.boards}
             onClick={handleClickBurger}
             colorText="whitesmoke"
-            title="Boards"
+            title={t('Boards')}
             fullBackground="#0077b5"
           />
           <Button
             pathLink={ROUTES.edit}
             onClick={handleClickBurger}
             colorText="whitesmoke"
-            title="Edit profile"
+            title={t('profile')}
             fullBackground="rgba(204, 124, 54, 1)"
           />
           <Button
-            pathLink={RouteMain}
+            pathLink={`${RouteMain}//`}
             onClick={handleClickBurger}
             colorText="whitesmoke"
-            title="Sign out"
+            title={t('SignOut')}
             fullBackground="#d84315"
             handleLogout={handleLogout}
           />
-          <ChangeLang onHandleClick={handleClickBurger} />
+          <ChangeLang onHandleClick={handleLanguageClick} />
         </div>
       ) : (
         <div
@@ -72,7 +82,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             pathLink={ROUTES.signin}
             onClick={handleClickBurger}
             colorText="whitesmoke"
-            title="Sing In"
+            title={t('SignIn')}
             fullBackground="rgba(68, 165, 79, 1)"
             handleLogin={handleLogin}
           />
@@ -80,11 +90,11 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             pathLink={ROUTES.signup}
             onClick={handleClickBurger}
             colorText="whitesmoke"
-            title="Sing Up"
+            title={t('SignUp')}
             fullBackground="rgba(204, 124, 54, 1)"
             handleLogin={handleLogin}
           />
-          <ChangeLang onHandleClick={handleClickBurger} />
+          <ChangeLang onHandleClick={handleLanguageClick} />
         </div>
       )}
       <Burger onClick={handleClickBurger} stateBurger={burgerState} />
