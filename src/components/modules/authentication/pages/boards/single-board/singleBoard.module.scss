@@ -59,3 +59,26 @@
     width: 196px;
     height: 40px;
 }
+
+@media (max-width: 660px) {
+    .list {
+        max-height: calc(100vh - 435px);
+        &__active {
+            max-height: calc(100vh - 435px);
+        }
+    }
+}
+
+@media (max-width: 410px) {
+    .container {
+        margin: 8px auto;
+    }
+
+    .columns__container {
+        padding: 8px 0;
+    }
+
+    .title {
+        font-size: 28px;
+    } 
+}

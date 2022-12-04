@@ -88,6 +88,7 @@
         padding: 0 8px;
     }
 }
+
 .title__buttons {
     margin-top: 8px;
     width: 100%;
@@ -119,4 +120,29 @@
     height: 40px;
 }
 
+@media (max-width: 660px) {
+    .list {
+        max-height: calc(100vh - 435px);
+        &__active {
+            max-height: calc(100vh - 435px);
+        }
+    }
+}
 
+@media (max-width: 410px) {
+    .list {
+        max-height: calc(100vh - 485px);
+        &__active {
+            max-height: calc(100vh - 485px);
+        }
+    }
+    
+    .button {
+        height: 30px;
+    }
+
+    .title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}
