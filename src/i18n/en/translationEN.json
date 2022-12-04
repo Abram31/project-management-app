@@ -26,6 +26,8 @@
   "BoardTitle": "BOARD TITLE",
   "BoardDescription": "BOARD DESCRIPTION",
   "сreate": "CREATE",
+  "Boards": "Boards",
+  "SignOut": "Sign Out",
   "errors": {
     "requiredErr": "This field is required.",
     "userNameErr": "Must be min 2 characters(only letters, apostrophes, hyphens).",

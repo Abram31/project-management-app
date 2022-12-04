@@ -1,49 +1,49 @@
 @import '../../../../utils/scss/mixins.scss';
 
 .page_with_boards {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  margin-top: 3rem;
+
+  .title_boards {
+    @include title-page;
+  }
+
+  .boards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 0 0 5rem 0;
+
+    @media (max-width: 688px) {
+      justify-content: space-around;
+    }
+  }
+
+  @media (max-width: 400px) {
+    padding: 1rem 1rem 4rem 1rem;
+  }
+
+  .wrapper_board_button {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding: 1rem;
+    justify-content: flex-start;
+    width: 13rem;
+    min-height: 7rem;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    gap: 1rem;
+    @include box-shadow;
 
-
-    .title_boards {
-        @include title-page
+    .wrapper__button_delete {
+      align-self: flex-end;
+      position: absolute;
+      bottom: 0rem;
+      right: 0rem;
     }
-
-    .boards {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        gap: 1rem;
-        padding: 0 0 5rem 0;
-
-        @media(max-width:688px) {
-            justify-content: space-around;
-        }
-    }
-
-    @media(max-width:400px) {
-        padding: 1rem 1rem 4rem 1rem;
-    }
-
-    .wrapper_board_button {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        width: 13rem;
-        min-height: 7rem;
-        border-radius: .3rem;
-        padding: .5rem;
-        gap: 1rem;
-        @include box-shadow;
-
-        .wrapper__button_delete {
-            align-self: flex-end;
-            position: absolute;
-            bottom: 0rem;
-            right: 0rem;
-        }
-    }
+  }
 }

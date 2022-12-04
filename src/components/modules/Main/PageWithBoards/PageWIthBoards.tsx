@@ -84,13 +84,15 @@ export const PageWIthBoards = () => {
     <>
       <section className={module.page_with_boards}>
         <h3 className={module.title_boards}>{t('YourBoards')}</h3>
-        <Button
-          borderColor="rgba(157, 164, 172, 1)"
-          colorText="whitesmoke"
-          title={t('NewBoard')}
-          pathLink=""
-          onClick={onClickAddBoard}
-        />
+        <div>
+          <Button
+            borderColor="rgba(157, 164, 172, 1)"
+            colorText="whitesmoke"
+            title={t('NewBoard')}
+            pathLink=""
+            onClick={onClickAddBoard}
+          />
+        </div>
         <div className={module.boards}>
           {boards &&
             Object.entries(boards).map((board, index) => {
