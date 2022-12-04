@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, FormEventHandler } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { DragDropContext, DraggableProps, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { fetchRequest } from 'fetch/fetchRequest';
-import { URLS } from 'constants/constants';
+import { ROUTES, URLS } from 'constants/constants';
 import { useAuthUser } from 'hooks/hooks';
+import Preloader from 'components/modules/common/preloader/Preloader';
 
 import Column from '../column/Column';
 import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
+import BoardModal from '../board-modal/BoardModal';
+import InputField from 'components/modules/common/inputField/InputField';
 
 import classes from './singleBoard.module.scss';
 
@@ -89,42 +94,34 @@ const updateTasks = (
   });
 };
 
-// const getColumn = (boardId?: string) => {
-//   const request = fetchRequest({
-//     URL: `${URLS.boards}/${boardId}`,
-//     method: 'GET',
-//     token: localStorage.getItem('token')!,
-//   });
-//   request.then((result) => {
-//     console.log(result);
-//   });
-// };
-
 const SingleBoard = () => {
+  const [data, updateData] = useState<IData | null>(null);
+  const [isAddColumnModal, setAddColumnModal] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const { boardId } = useParams();
   const { user } = useAuthUser();
-  const [data, updateData] = useState<IData | null>(null);
-  const [columnName, setColumnName] = useState<string>('');
+  const { register, getValues, reset } = useForm();
 
   useEffect(() => {
     getData(boardId, updateData);
   }, [boardId]);
 
-  const handleAddColumn = () => {
+  const handleAddColumn: FormEventHandler<HTMLFormElement> = (e) => {
+    setLoading(true);
+    setAddColumnModal(false);
+    e.preventDefault();
+    const { column_title } = getValues();
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns`,
       method: 'POST',
       token: localStorage.getItem('token')!,
       bodyParams: {
-        title: columnName,
+        title: column_title,
       },
     });
-    request.then(() => getData(boardId, updateData));
-    setColumnName('');
-  };
-
-  const handleColumnNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColumnName(e.target.value);
+    request.then(() => getData(boardId, updateData)).then(() => setLoading(false));
+    toast.success('Column created');
+    reset();
   };
 
   const handleDragEnd = (result: DropResult) => {
@@ -227,38 +224,57 @@ const SingleBoard = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <h2 className={classes.title}>{data && data.boardTitle}</h2>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="all-columns" direction="horizontal" type="column">
-          {(provided) => (
-            <div
-              className={classes.columns__container}
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {data &&
-                data.columns!.map((column, idx) => {
-                  return (
-                    <Column
-                      key={column.id}
-                      column={column}
-                      tasks={column.tasks}
-                      index={idx}
-                      boardId={boardId}
-                      updateData={updateData}
-                    />
-                  );
-                })}
-              {provided.placeholder}
-              <div className={classes.column__button}>
-                <FormBtn onClick={handleAddColumn}>Add column</FormBtn>
-              </div>
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
-    </div>
+    <>
+      <div className={classes.container}>
+        <div className={classes.container__header}>
+          <Link to={ROUTES.boards}>Back</Link>
+          <h2 className={classes.title}>{data && data.boardTitle}</h2>
+        </div>
+        <div className={classes.columns__container}>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(provided) => (
+                <div
+                  className={classes.columns}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {data &&
+                    data.columns!.map((column, idx) => {
+                      return (
+                        <Column
+                          key={column.id}
+                          column={column}
+                          tasks={column.tasks}
+                          index={idx}
+                          boardId={boardId}
+                          updateData={updateData}
+                        />
+                      );
+                    })}
+                  {provided.placeholder}
+                  <div className={classes.button}>
+                    <FormBtn onClick={() => setAddColumnModal(true)}>Add column</FormBtn>
+                  </div>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      </div>
+      <BoardModal
+        title="Add column"
+        isActive={isAddColumnModal}
+        setActive={setAddColumnModal}
+        handleSubmit={handleAddColumn}
+      >
+        <label className={classes.label} htmlFor="column_title">
+          COLUMN TITLE
+        </label>
+        <InputField {...register('column_title')} id="column_title" placeholder="Type title" />
+      </BoardModal>
+      {isLoading && <Preloader />}
+    </>
   );
 };
 

@@ -1,0 +1,19 @@
+@import '../../../../utils/scss/constants.scss';
+
+.edit {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url(../../../../../public/edit-icon.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: .2s;
+
+    &:hover {
+        cursor: pointer;
+        filter: $hover-color-delete-basket;
+    }
+    &:active {
+        transform: scale(.9);
+    }
+}
