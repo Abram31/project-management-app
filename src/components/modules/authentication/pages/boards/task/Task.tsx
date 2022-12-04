@@ -26,7 +26,7 @@ const Task = ({ task, index, showDetails, handleClickEdit, handleClickDeleteButt
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <div className={classes.titles}>
+          <div className={classes.title__container}>
             <p className={classes.title}>{task.title}</p>
           </div>
           <div className={classes.buttons}>

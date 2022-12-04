@@ -11,9 +11,17 @@
     background-color: #2E3439;
 }
 
+.title__container {
+    max-width: 60%;
+
+}
+
 .title {
     font-size: 24px;
     line-height: 27px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .buttons {
