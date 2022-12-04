@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import { updateToast } from 'utils/utils';
 import Preloader from '../../../common/preloader/Preloader';
 import { useTranslation } from 'react-i18next';
+import FormTitle from 'components/modules/common/formTitle/FormTitle';
 
 export interface ISignUpData {
   name: string;
@@ -79,7 +80,7 @@ function SignUp() {
         onChange={handleFormChange}
         className={styles.form}
       >
-        <h1 className={styles.form__title}>{t('SignUp')}</h1>
+        <FormTitle>{t('SignUp')}</FormTitle>
         <div className={styles.form_item}>
           <label className={styles.form_item__label}>{t('name')}</label>
           <div className={styles.input__box}>

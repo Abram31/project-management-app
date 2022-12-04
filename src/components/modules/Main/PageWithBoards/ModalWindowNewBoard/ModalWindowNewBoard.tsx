@@ -5,6 +5,7 @@ import { fetchRequest } from 'fetch/fetchRequest';
 import { useAppDispatch } from 'hooks/hooks';
 import React, { FormEventHandler, MouseEventHandler } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { BorderData, setBoard } from 'store/boardsSlice';
 import module from './ModalWindowNewBoard.module.scss';
 
@@ -20,6 +21,7 @@ export const ModalWindowNewBoard = ({
 }: ModalWindowNewBoardProps) => {
   const { register, getValues } = useForm();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const onSubmit: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
@@ -40,18 +42,18 @@ export const ModalWindowNewBoard = ({
   return (
     <div id="modal_wrapper" onClick={onClick} className={module.wrapper__modal_window}>
       <form className={module.modal_window} onSubmit={onSubmit}>
-        <h3 className={module.modal_window__title}>Create board</h3>
+        <h3 className={module.modal_window__title}>{t('CreateBoard')}</h3>
         <div className={module.wrapper__input_board_title}>
-          <label htmlFor="board_title">BOARD TITLE</label>
+          <label htmlFor="board_title">{t('BoardTitle')}</label>
           <InputField {...register('board_title')} id="board_title" />
         </div>
         <div className={module.wrapper__input_board_description}>
-          <label htmlFor="board_description">BOARD DESCRIPTION</label>
+          <label htmlFor="board_description">{t('BoardDescription')}</label>
           <InputField {...register('board_description')} id="board_description" />
         </div>
         <div className={module.wrapper__submit_button}>
           <FormBtn disabled={false} type="submit">
-            CREATE
+            {t('сreate')}
           </FormBtn>
         </div>
       </form>

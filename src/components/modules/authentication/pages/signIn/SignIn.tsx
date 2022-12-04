@@ -9,6 +9,7 @@ import { setUser } from 'store/authorizationSlice';
 import Preloader from '../../../common/preloader/Preloader';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import FormTitle from 'components/modules/common/formTitle/FormTitle';
 
 export interface ISignInData {
   login: string;
@@ -58,7 +59,7 @@ function SignIn() {
         onChange={handleFormChange}
         className={styles.form}
       >
-        <h1 className={styles.form__title}>{t('SignIn')}</h1>
+        <FormTitle>{t('SignIn')}</FormTitle>
         <div className={styles.form_item}>
           <label className={styles.form_item__label}>{t('login')}</label>
           <div className={styles.input__box}>

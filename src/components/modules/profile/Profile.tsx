@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useAppSelector, useAuthUser } from 'hooks/hooks';
 import { getUserName, removeUserData, setRelogin } from 'store/authorizationSlice';
 import { useAppDispatch } from 'hooks/hooks';
@@ -13,6 +13,8 @@ import styles from './Profile.module.scss';
 
 import '../../../i18n/config';
 import { useTranslation } from 'react-i18next';
+import FormTitle from '../common/formTitle/FormTitle';
+import { Сonfirmation } from '../common/Сonfirmation/Сonfirmation';
 interface IProfileData {
   name: string;
   login: string;
@@ -26,6 +28,7 @@ function Profile() {
   const [formChanged, setFormChanged] = useState(false);
   const { name } = useAppSelector((state) => state.user);
   const { status } = useAppSelector((state) => state.user);
+  const [confirmation, setСonfirmation] = useState(false);
   const {
     register,
     handleSubmit,
@@ -127,11 +130,23 @@ function Profile() {
     setFormChanged(true);
   };
 
+  const handleСonfirmation: MouseEventHandler<HTMLButtonElement> = (e) => {
+    if (e.currentTarget.id === 'confirm') {
+      handleDeleteAccount();
+    } else {
+      setСonfirmation(false);
+    }
+  };
+
+  const handleClickDelete = () => {
+    setСonfirmation(true);
+  };
+
   return (
     <div className={styles.profile}>
       <h1 className={styles.profile__title}>{t('profile')}</h1>
       <div className={styles.profile__inner}>
-        <div>
+        <div className={styles.profile__info_box}>
           <ul className={styles.profile__info}>
             <li className={styles.profile__info_item}>
               {t('name')}: <span>{name}</span>
@@ -143,11 +158,7 @@ function Profile() {
               {t('id')}: <span>{user.userId}</span>
             </li>
           </ul>
-          <button
-            className={styles.profile__delete_btn}
-            type="button"
-            onClick={handleDeleteAccount}
-          >
+          <button className={styles.profile__delete_btn} type="button" onClick={handleClickDelete}>
             {t('deleteAccount')}
           </button>
         </div>
@@ -157,7 +168,7 @@ function Profile() {
             onChange={handleFormChange}
             className={styles.form}
           >
-            <h1 className={styles.form__title}>{t('editProfile')}</h1>
+            <FormTitle>{t('editProfile')}</FormTitle>
             <div className={styles.form_item}>
               <label className={styles.form_item__label}>{t('name')}</label>
               <div className={styles.input__box}>
@@ -212,6 +223,9 @@ function Profile() {
         </div>
       </div>
       {(status === UserStatus.loading || loading) && <Preloader />}
+      {confirmation && (
+        <Сonfirmation onClick={handleСonfirmation}>{t('deleteAccountdQuestion')}</Сonfirmation>
+      )}
     </div>
   );
 }

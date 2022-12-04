@@ -1,8 +1,9 @@
 import { RouteMain, ROUTES } from 'constants/constants';
-import { useAuthUser } from 'hooks/hooks';
+import { useAppDispatch, useAuthUser } from 'hooks/hooks';
 import { changeLanguage } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { setLang } from 'store/localizationSlice';
 import { Button } from '../common/Button/Button';
 import { Burger } from './Burger/Burger';
 import { ChangeLang } from './ChangeLang/ChangeLang';
@@ -16,15 +17,16 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
   const [prevScroll, setScroll] = useState(false);
   const [burgerState, setBurgerState] = useState(false);
   const { userExist } = useAuthUser();
+  const dispatch = useAppDispatch();
 
   const handleClickBurger = () => {
     setBurgerState(!burgerState);
   };
 
-  const handleLanguageClick = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    const lang = e.currentTarget.innerText.toLowerCase();
-    changeLanguage(lang);
-    localStorage.setItem('lang', lang);
+  const handleLanguageClick = (lng: string) => {
+    console.log(lng);
+    dispatch(setLang(lng));
+    changeLanguage(lng);
   };
 
   useEffect(() => {

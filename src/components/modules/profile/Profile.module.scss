@@ -1,5 +1,5 @@
 .profile {
-  margin: 5rem 0;
+  margin: 4rem 0 2rem 0;
 }
 
 .profile__inner {
@@ -22,7 +22,8 @@
 }
 
 .profile__info_item {
-  margin-top: 10px;
+  margin-top: 7px;
+  line-height: 1.4;
 }
 
 .profile__info_item span {
@@ -52,6 +53,7 @@
 
 .form__box {
   flex-basis: 470px;
+  flex-shrink: 0;
   margin-left: 50px;
 }
 
@@ -64,14 +66,6 @@
   align-items: center;
   background-color: var(--black-color);
   border-radius: 4px;
-}
-
-.form__title {
-  color: var(--title-color);
-  margin-bottom: 30px;
-  font-size: 28px;
-  font-weight: 500;
-  line-height: 1.2;
 }
 
 .form_item {
@@ -113,4 +107,44 @@
 .form__link:hover {
   color: var(--orange-light);
   transition: color 0.1s ease-in-out;
+}
+
+@media only screen and (max-width: 900px) {
+  .form__box {
+    margin-left: 20px;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .profile__info {
+    margin-top: 0;
+  }
+  .profile__inner {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  .form__box {
+    margin-left: 0;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+  }
+  .profile__info_box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .profile__info_item span {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .form {
+    padding: 30px 15px;
+  }
+  .input__box {
+    margin-bottom: 38px;
+  }
+  .profile__title {
+    font-size: 28px;
+  }
 }

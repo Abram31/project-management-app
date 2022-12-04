@@ -119,4 +119,4 @@ const authorizationSlice = createSlice({
 });
 
 export const { removeUserData, setRelogin } = authorizationSlice.actions;
-export default authorizationSlice;
+export default authorizationSlice.reducer;

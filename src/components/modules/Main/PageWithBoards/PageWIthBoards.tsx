@@ -120,7 +120,9 @@ export const PageWIthBoards = () => {
           setLoading={setLoading}
         />
       )}
-      {confirmation && <Сonfirmation onClick={onClickСonfirmation} />}
+      {confirmation && (
+        <Сonfirmation onClick={onClickСonfirmation}>{t('deleteBoardQuestion')}</Сonfirmation>
+      )}
     </>
   );
 };
