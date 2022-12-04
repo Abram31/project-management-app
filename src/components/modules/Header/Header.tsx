@@ -53,7 +53,7 @@ export const Header = ({ handleLogin, handleLogout }: HeaderProps) => {
             fullBackground="rgba(204, 124, 54, 1)"
           />
           <Button
-            pathLink=""
+            pathLink={`${RouteMain}//`}
             onClick={handleClickBurger}
             colorText="whitesmoke"
             title="Sign out"
