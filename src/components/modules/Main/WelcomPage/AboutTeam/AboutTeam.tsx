@@ -1,11 +1,13 @@
 import React from 'react';
 import module from './AboutTeam.module.scss';
 import { members } from './members';
+import { useTranslation } from 'react-i18next';
 
 export const AboutTeam = () => {
+  const { t } = useTranslation();
   return (
     <div className={module.wrapper_about_team}>
-      <h3 className={module.title}>Our Team</h3>
+      <h3 className={module.title}>{t('OurTeam')}</h3>
       <div className={module.container}>
         {Object.entries(members).map((item, index) => {
           return (

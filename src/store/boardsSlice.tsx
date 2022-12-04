@@ -82,4 +82,4 @@ const boardSlice = createSlice({
 });
 
 export const { setBoards, setBoard, removeBoard, setColumns, setColumn } = boardSlice.actions;
-export default boardSlice;
+export default boardSlice.reducer;
