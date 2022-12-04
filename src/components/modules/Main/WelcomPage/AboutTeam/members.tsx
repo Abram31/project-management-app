@@ -19,8 +19,8 @@ export const members = {
     name: 'Nadya',
     gitHubName: 'nadyasav',
     description: 'Authentification, Profile, Localization',
-    linkedIn: '',
+    linkedIn: 'https://www.linkedin.com/in/nadezhda-savkova-665519259/',
     gitHub: 'https://github.com/nadyasav',
-    avatar: 'https://i.ibb.co/y5R2xNm/mister-bin.jpg',
+    avatar: 'https://i.ibb.co/zGrDXHb/photo123.png',
   },
 };
