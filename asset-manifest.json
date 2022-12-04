@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/project-management-app/static/css/main.3804b05f.css",
-    "main.js": "/project-management-app/static/js/main.7adc88a7.js",
+    "main.js": "/project-management-app/static/js/main.2efec2ed.js",
     "static/media/hands.svg": "/project-management-app/static/media/hands.777326869c06ab3ff3b0.svg",
     "static/media/burger.svg": "/project-management-app/static/media/burger.53b6b28ef64a96fc02d6.svg",
     "index.html": "/project-management-app/index.html",
     "static/media/basket-delete.svg": "/project-management-app/static/media/basket-delete.11643680c3e01cb0588a.svg",
     "main.3804b05f.css.map": "/project-management-app/static/css/main.3804b05f.css.map",
-    "main.7adc88a7.js.map": "/project-management-app/static/js/main.7adc88a7.js.map"
+    "main.2efec2ed.js.map": "/project-management-app/static/js/main.2efec2ed.js.map"
   },
   "entrypoints": [
     "static/css/main.3804b05f.css",
-    "static/js/main.7adc88a7.js"
+    "static/js/main.2efec2ed.js"
   ]
 }
