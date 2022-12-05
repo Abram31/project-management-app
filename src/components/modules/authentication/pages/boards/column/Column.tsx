@@ -18,6 +18,7 @@ import InputField from 'components/modules/common/inputField/InputField';
 import { ButtonDeleteBasket } from 'components/modules/common/ButtonDeleteBasket/ButtonDeleteBasket';
 
 import classes from './column.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   column: ColumnType;
@@ -39,6 +40,7 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
   const [isConfirmationTaskDelete, setConfirmationTaskDelete] = useState<boolean>(false);
   const { register, getValues, reset } = useForm();
   const { user } = useAuthUser();
+  const { t } = useTranslation();
 
   const handleChangeColumnTitle = () => {
     const { column_title } = getValues();
@@ -55,7 +57,7 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
       token: localStorage.getItem('token')!,
     });
     request.then(() => getData(boardId, updateData));
-    toast.success('Column deleted');
+    toast.success(t('ColumnDeleted'));
   };
 
   const handleAddTask: FormEventHandler<HTMLFormElement> = (e) => {
@@ -79,7 +81,7 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
         reset();
         setLoading(false);
       });
-    toast.success('Task created');
+    toast.success(t('TaskCreated'));
   };
 
   const getTask = (e: React.SyntheticEvent<HTMLDivElement>) => {
@@ -115,7 +117,7 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
       token: localStorage.getItem('token')!,
     });
     request.then(() => getData(boardId, updateData)).then(() => setLoading(false));
-    toast.success('Task deleted');
+    toast.success(t('TaskDeleted'));
   };
 
   const showTaskDetails = (e: React.SyntheticEvent<HTMLDivElement>) => {
@@ -147,7 +149,7 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
         reset({ task_title_edit: '', task_description_edit: '' });
         setLoading(false);
       });
-    toast.success('Task edited');
+    toast.success(t('TaskEdited'));
   };
 
   return (
@@ -159,7 +161,6 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            onDrop={(e) => console.log(e)}
           >
             {isColumnTitleChange ? (
               <div className={classes.title__change_container}>
@@ -176,11 +177,11 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
                       className={classes.cancel__button}
                       onClick={() => setColumnTitleChange(false)}
                     >
-                      Cancel
+                      {t('Cancel')}
                     </button>
                   </div>
                   <div className={classes.title__button_box}>
-                    <FormBtn onClick={handleChangeColumnTitle}>Submit</FormBtn>
+                    <FormBtn onClick={handleChangeColumnTitle}>{t('Submit')}</FormBtn>
                   </div>
                 </div>
               </div>
@@ -216,82 +217,84 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
               )}
             </Droppable>
             <div className={classes.button}>
-              <FormBtn onClick={() => setAddTaskModal(true)}>Add task</FormBtn>
+              <FormBtn onClick={() => setAddTaskModal(true)}>{t('AddTask')}</FormBtn>
             </div>
           </div>
         )}
       </Draggable>
       {isLoading && <Preloader />}
       <BoardModal
-        title="Add task"
+        title={t('AddTask')}
         isActive={isAddTaskActive}
         setActive={setAddTaskModal}
         handleSubmit={handleAddTask}
       >
         <div className={classes.input_box}>
           <label className={classes.label} htmlFor="task_title_create">
-            TASK TITLE
+            {t('TaskTitle')}
           </label>
           <InputField
             {...register('task_title_create')}
             id="task_title_create"
-            placeholder="Type title"
+            placeholder={t('TypeTitle')}
           />
         </div>
         <div className={classes.input_box}>
           <label className={classes.label} htmlFor="task_description_create">
-            TASK DESCRIPTION
+            {t('TaskDescription')}
           </label>
           <InputField
             {...register('task_description_create')}
             id="task_description_create"
-            placeholder="Type description"
+            placeholder={t('TypeDescription')}
           />
         </div>
       </BoardModal>
       <BoardModal
-        title="Update task"
+        title={t('UpdateTask')}
         isActive={isUpdateTask}
         setActive={setUpdateTask}
         handleSubmit={handleEditTask}
       >
         <div className={classes.input_box}>
           <label className={classes.label} htmlFor="task_title_edit">
-            TASK TITLE
+            {t('TaskTitle')}
           </label>
           <InputField
             {...register('task_title_edit')}
             id="task_title_edit"
-            placeholder="Type title"
+            placeholder={t('TypeTitle')}
           />
         </div>
         <div className={classes.input_box}>
           <label className={classes.label} htmlFor="task_description_edit">
-            TASK DESCRIPTION
+            {t('TaskDescription')}
           </label>
           <InputField
             {...register('task_description_edit')}
             id="task_description_edit"
-            placeholder="Type description"
+            placeholder={t('TypeDescription')}
           />
         </div>
       </BoardModal>
       <BoardModal
-        title={currentTask ? currentTask.title : 'Task details'}
+        title={currentTask ? currentTask.title : t('TaskDetails')}
         isActive={isTaskModal}
         setActive={setTaskModal}
         isDetails={true}
       >
-        <p>Description : {currentTask && currentTask.description}</p>
+        <p>
+          {t('Description')} : {currentTask && currentTask.description}
+        </p>
       </BoardModal>
       <BoardModal
-        title="Are you sure you want to delete this column?"
+        title={t('DeleteColumnQuestion')}
         isActive={isConfirmationColumnDelete}
         setActive={setConfirmationColumnDelete}
         handleSubmit={handleDeleteColumn}
       />
       <BoardModal
-        title="Are you sure you want to delete this task?"
+        title={t('DeleteTaskQuestion')}
         isActive={isConfirmationTaskDelete}
         setActive={setConfirmationTaskDelete}
         handleSubmit={handleDeleteTask}
