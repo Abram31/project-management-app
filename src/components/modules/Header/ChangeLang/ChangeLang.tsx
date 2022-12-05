@@ -1,20 +1,21 @@
-import React, { MouseEventHandler, useState } from 'react';
+import { useAppSelector } from 'hooks/hooks';
+import React from 'react';
 import module from './ChangeLang.module.scss';
 
 interface ChangeLangProps {
-  onHandleClick: MouseEventHandler<HTMLElement>;
+  onHandleClick: (lng: string) => void;
 }
 export const ChangeLang = ({ onHandleClick }: ChangeLangProps) => {
-  const [lang, setLang] = useState(true);
+  const { lang } = useAppSelector((state) => state.lang);
+  const langs = ['en', 'ru'];
+
+  const handleLangClick = () => {
+    onHandleClick(lang === langs[0] ? langs[1] : langs[0]);
+  };
+
   return (
-    <span
-      className={module.change_lang}
-      onClick={(event) => {
-        setLang(!lang);
-        onHandleClick(event);
-      }}
-    >
-      {lang ? 'EN' : 'RU'}
+    <span className={module.change_lang} onClick={handleLangClick}>
+      {lang}
     </span>
   );
 };

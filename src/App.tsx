@@ -1,6 +1,8 @@
 import React from 'react';
 import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
+import './i18n/config';
+
 import Profile from 'components/modules/profile/Profile';
 import PrivateRoutes from 'components/private-routes/PrivateRoutes';
 import { Header } from 'components/modules/Header/Header';

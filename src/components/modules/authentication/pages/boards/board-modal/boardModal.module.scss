@@ -1,0 +1,84 @@
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    opacity: 0;
+    pointer-events: none;
+    transition: .5s;
+    &.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
+.modal { 
+    &__window {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 470px;
+        background-color: var(--black-color);
+        padding: 1.8rem;
+        border-radius: 0.3rem;
+        transform: scale(0.3);
+        transition: .5s;
+        &.active {
+            transform: scale(1);
+        }
+    }
+}
+
+.title {
+    text-align: center;
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.label {
+    margin-bottom: 12px;
+}
+
+.input__container {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 36px auto 0;
+}
+
+.button__box {
+    height: 3rem;
+}
+
+.cancel__button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    padding: 10px 15px;
+    color: var(--main-color);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 1;
+    border: 1px solid var(--main-color);
+    transition: color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+    &:hover {
+        border-color: rgb(165, 40, 40);
+        color: rgb(165, 40, 40);
+    }
+}

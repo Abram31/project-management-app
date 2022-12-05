@@ -1,18 +1,19 @@
 .change_lang {
-    width: 2.5rem;
-    text-align: center;
-    border-radius: 10rem;
-    background-color: #808080;
-    padding: .6rem;
-    color: whitesmoke;
-    cursor: pointer;
-    transition: .4s;
+  width: 2.5rem;
+  text-align: center;
+  border-radius: 10rem;
+  background-color: #808080;
+  padding: 0.6rem;
+  color: whitesmoke;
+  cursor: pointer;
+  transition: 0.4s;
+  text-transform: uppercase;
 
-    &:active {
-        transform: scale(.9);
-    }
+  &:active {
+    transform: scale(0.9);
+  }
 
-    &:hover {
-        box-shadow: .1rem .1rem .3rem .3rem;
-    }
+  &:hover {
+    box-shadow: 0.1rem 0.1rem 0.2rem 0.05rem;
+  }
 }
