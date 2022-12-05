@@ -1,0 +1,47 @@
+.task {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    margin-top: 16px;
+    padding: 8px;
+    font-size: 20px;
+    line-height: 24px;
+    color: #A0A0A0;
+    background-color: #2E3439;
+}
+
+.title__container {
+    max-width: 60%;
+
+}
+
+.title {
+    font-size: 24px;
+    line-height: 27px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.buttons {
+    display: flex;
+    
+}
+
+.button__box {
+    margin-left: 8px;
+    width: 20px;
+    height: 20px;
+    &:first-child {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 660px) {
+    .task {
+        height: 40px;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}

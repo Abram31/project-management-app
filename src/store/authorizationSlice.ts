@@ -101,7 +101,7 @@ const authorizationSlice = createSlice({
       state.login = data.login || '';
       state.iat = data.iat || '';
     });
-    builder.addCase(setUser.rejected, (state, action) => {
+    builder.addCase(setUser.rejected, (state) => {
       state.status = UserStatus.rejected;
     });
     builder.addCase(getUserName.pending, (state) => {

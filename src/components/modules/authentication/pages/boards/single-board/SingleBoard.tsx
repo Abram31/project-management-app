@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, FormEventHandler } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { DragDropContext, DraggableProps, Droppable, DropResult } from 'react-beautiful-dnd';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import { fetchRequest } from 'fetch/fetchRequest';
-import { URLS } from 'constants/constants';
-
-import Column from '../columns/Column';
-
-import classes from '../boards.module.scss';
+import { ROUTES, URLS } from 'constants/constants';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
+import Preloader from 'components/modules/common/preloader/Preloader';
 import { setColumn } from 'store/boardsSlice';
 
+import Column from '../column/Column';
+import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
+import BoardModal from '../board-modal/BoardModal';
+import InputField from 'components/modules/common/inputField/InputField';
+
+import classes from './singleBoard.module.scss';
+
 export interface IData {
+  boardTitle: string;
+  boardDescription: string;
   columns: ColumnType[];
   idBoard?: string;
 }
@@ -38,12 +46,14 @@ export const getData = async (
 
   if (request) {
     const myData: IData = {
+      boardTitle: request.title,
+      boardDescription: request.description,
       columns: request.columns.sort((a: ColumnType, b: ColumnType) => a.order - b.order),
     };
-    updateData(myData!);
-  }
 
-  return request;
+    updateData(myData!);
+    return request;
+  }
 };
 
 const updateColumns = (
@@ -89,33 +99,39 @@ const updateTasks = (
 };
 
 const SingleBoard = () => {
+  const [data, updateData] = useState<IData | null>(null);
+  const [isAddColumnModal, setAddColumnModal] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
   const { boardId } = useParams();
   const { user } = useAuthUser();
-  const [data, updateData] = useState<IData | null>(null);
-  const [columnName, setColumnName] = useState<string>('');
+  const { register, getValues, reset } = useForm();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     getData(boardId, updateData);
   }, [boardId]);
 
-  const handleAddColumn = () => {
+  const handleAddColumn: FormEventHandler<HTMLFormElement> = (e) => {
+    setLoading(true);
+    setAddColumnModal(false);
+    e.preventDefault();
+    const { column_title } = getValues();
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns`,
       method: 'POST',
       token: localStorage.getItem('token')!,
       bodyParams: {
-        title: columnName,
+        title: column_title,
       },
     });
-    request.then(({ id, order, title }: { id: string; order: string; title: string }) => {
-      getData(boardId, updateData);
-      dispatch(setColumn({ boardId: boardId!, columnId: id, title: title, order }));
-    });
-    setColumnName('');
-  };
-
-  const handleColumnNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setColumnName(e.target.value);
+    request
+      .then(({ id, order, title }: { id: string; order: string; title: string }) => {
+        getData(boardId, updateData);
+        dispatch(setColumn({ boardId: boardId!, columnId: id, title: title, order }));
+      })
+      .then(() => setLoading(false));
+    toast.success('Column created');
+    reset();
   };
 
   const handleDragEnd = async (result: DropResult) => {
@@ -138,6 +154,7 @@ const SingleBoard = () => {
       columns.map(({ id, title }, idx) => updateColumns(boardId, id, title, idx + 1));
 
       const newData = {
+        ...data,
         columns,
       };
 
@@ -172,6 +189,7 @@ const SingleBoard = () => {
       columns.splice(columnId, 1, start);
 
       const newData = {
+        ...data,
         columns,
       };
 
@@ -208,6 +226,8 @@ const SingleBoard = () => {
     columns.splice(endColumnId, 1, end);
 
     const newData = {
+      boardTitle: data!.boardTitle,
+      boardDescription: data!.boardDescription,
       columns,
     };
 
@@ -215,32 +235,57 @@ const SingleBoard = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={handleDragEnd}>
-      <Droppable droppableId="all-columns" direction="horizontal" type="column">
-        {(provided) => (
-          <div className={classes.container} {...provided.droppableProps} ref={provided.innerRef}>
-            <div>
-              <input type="text" value={columnName} onChange={handleColumnNameChange} />
-              <button onClick={handleAddColumn}>Add column</button>
-            </div>
-            {data &&
-              data.columns!.map((column, idx) => {
-                return (
-                  <Column
-                    key={column.id}
-                    column={column}
-                    tasks={column.tasks}
-                    index={idx}
-                    boardId={boardId}
-                    updateData={updateData}
-                  />
-                );
-              })}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <div className={classes.container}>
+        <div className={classes.container__header}>
+          <Link to={ROUTES.boards}>Back</Link>
+          <h2 className={classes.title}>{data && data.boardTitle}</h2>
+        </div>
+        <div className={classes.columns__container}>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="all-columns" direction="horizontal" type="column">
+              {(provided) => (
+                <div
+                  className={classes.columns}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {data &&
+                    data.columns!.map((column, idx) => {
+                      return (
+                        <Column
+                          key={column.id}
+                          column={column}
+                          tasks={column.tasks}
+                          index={idx}
+                          boardId={boardId}
+                          updateData={updateData}
+                        />
+                      );
+                    })}
+                  {provided.placeholder}
+                  <div className={classes.button}>
+                    <FormBtn onClick={() => setAddColumnModal(true)}>Add column</FormBtn>
+                  </div>
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
+      </div>
+      <BoardModal
+        title="Add column"
+        isActive={isAddColumnModal}
+        setActive={setAddColumnModal}
+        handleSubmit={handleAddColumn}
+      >
+        <label className={classes.label} htmlFor="column_title">
+          COLUMN TITLE
+        </label>
+        <InputField {...register('column_title')} id="column_title" placeholder="Type title" />
+      </BoardModal>
+      {isLoading && <Preloader />}
+    </>
   );
 };
 
