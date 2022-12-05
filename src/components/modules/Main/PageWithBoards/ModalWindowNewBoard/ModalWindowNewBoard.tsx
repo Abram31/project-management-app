@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { BorderData, setBoard } from 'store/boardsSlice';
 import module from './ModalWindowNewBoard.module.scss';
+import { toast } from 'react-toastify';
 
 interface ModalWindowNewBoardProps {
   onClick: MouseEventHandler<HTMLDivElement>;
@@ -33,10 +34,23 @@ export const ModalWindowNewBoard = ({
       URL: URLS.boards,
       token: localStorage.getItem('token')!,
       bodyParams: { title: board_title || ' ', description: board_description || ' ' },
-    }).then(({ description, title, id }: BorderData) => {
-      setLoading(false);
-      dispatch(setBoard({ title: title, description: description, id: id, columns: {} }));
-    });
+    })
+      .then(({ description, title, id }: BorderData) => {
+        toast.success('New board created', {
+          toastId: 'getUserName',
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: true,
+        });
+        setLoading(false);
+        dispatch(setBoard({ title: title, description: description, id: id, columns: {} }));
+      })
+      .catch(() => {
+        toast.error('New board not created', {
+          toastId: 'getUserName',
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: true,
+        });
+      });
     closeModal();
   };
   return (

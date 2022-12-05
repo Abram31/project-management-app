@@ -39,11 +39,11 @@ function App() {
           <Route path={RouteMain} element={<WelcomPage />} />
           <Route
             path={ROUTES.signin}
-            element={!userExist ? <SignIn /> : <Navigate to={ROUTES.boards} />}
+            element={!userExist ? <SignIn /> : <Navigate to={RouteMain} />}
           />
           <Route
             path={ROUTES.signup}
-            element={!userExist ? <SignUp /> : <Navigate to={ROUTES.boards} />}
+            element={!userExist ? <SignUp /> : <Navigate to={RouteMain} />}
           />
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
