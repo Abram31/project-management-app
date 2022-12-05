@@ -15,6 +15,7 @@ import BoardModal from '../board-modal/BoardModal';
 import InputField from 'components/modules/common/inputField/InputField';
 
 import classes from './singleBoard.module.scss';
+import { useTranslation } from 'react-i18next';
 
 export interface IData {
   boardTitle: string;
@@ -105,6 +106,7 @@ const SingleBoard = () => {
   const { user } = useAuthUser();
   const { register, getValues, reset } = useForm();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     getData(boardId, updateData);
@@ -133,7 +135,7 @@ const SingleBoard = () => {
         getData(boardId, updateData);
       })
       .then(() => setLoading(false));
-    toast.success('Column created');
+    toast.success(t('ColumnCreated'));
     reset();
   };
 
@@ -241,7 +243,9 @@ const SingleBoard = () => {
     <>
       <div className={classes.container}>
         <div className={classes.container__header}>
-          <Link to={ROUTES.boards}>Back</Link>
+          <Link to={ROUTES.boards} className={classes.back_link}>
+            {t('Back')}
+          </Link>
           <h2 className={classes.title}>{data && data.boardTitle}</h2>
         </div>
         <div className={classes.columns__container}>
@@ -268,7 +272,7 @@ const SingleBoard = () => {
                     })}
                   {provided.placeholder}
                   <div className={classes.button}>
-                    <FormBtn onClick={() => setAddColumnModal(true)}>Add column</FormBtn>
+                    <FormBtn onClick={() => setAddColumnModal(true)}>{t('AddColumn')}</FormBtn>
                   </div>
                 </div>
               )}
@@ -277,15 +281,15 @@ const SingleBoard = () => {
         </div>
       </div>
       <BoardModal
-        title="Add column"
+        title={t('AddColumn')}
         isActive={isAddColumnModal}
         setActive={setAddColumnModal}
         handleSubmit={handleAddColumn}
       >
         <label className={classes.label} htmlFor="column_title">
-          COLUMN TITLE
+          {t('ColumnTitle')}
         </label>
-        <InputField {...register('column_title')} id="column_title" placeholder="Type title" />
+        <InputField {...register('column_title')} id="column_title" placeholder={t('TypeTitle')} />
       </BoardModal>
       {isLoading && <Preloader />}
     </>

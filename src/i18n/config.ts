@@ -20,7 +20,6 @@ i18next
   .use(HttpApi)
   .use(LanguageDetector)
   .init({
-    debug: true,
     lng: getLocalStorage('lang') || 'en',
     resources,
     detection: {

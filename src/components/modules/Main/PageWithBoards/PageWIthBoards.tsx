@@ -58,7 +58,7 @@ export const PageWIthBoards = () => {
         URL: `${URLS.boards}/${boardID}`,
       })
         .then(() => {
-          toast.success('Board deleted', {
+          toast.success(t('BoardDeleted'), {
             toastId: 'getUserName',
             position: toast.POSITION.TOP_CENTER,
             closeButton: true,
@@ -66,7 +66,7 @@ export const PageWIthBoards = () => {
           dispatch(removeBoard(boardID));
         })
         .catch(() => {
-          toast.error('Something went wrong board not removed', {
+          toast.error(t('boardNotRemoved'), {
             toastId: 'getUserName',
             position: toast.POSITION.TOP_CENTER,
             closeButton: true,
@@ -98,7 +98,7 @@ export const PageWIthBoards = () => {
         dispatch(setBoards(data));
       })
       .catch(() => {
-        toast.error('Something went wrong', {
+        toast.error(t('SomethingWentWrong'), {
           toastId: 'getUserName',
           position: toast.POSITION.TOP_CENTER,
           closeButton: true,

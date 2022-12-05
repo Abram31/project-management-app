@@ -3,6 +3,7 @@ import React, { FormEventHandler } from 'react';
 import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
 
 import classes from './boardModal.module.scss';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   title: string;
@@ -14,6 +15,7 @@ type Props = {
 };
 
 const BoardModal = ({ title, isActive, setActive, handleSubmit, isDetails, children }: Props) => {
+  const { t } = useTranslation();
   return (
     <div
       className={isActive ? `${classes.overlay} ${classes.active}` : classes.overlay}
@@ -33,12 +35,12 @@ const BoardModal = ({ title, isActive, setActive, handleSubmit, isDetails, child
               type="reset"
               onClick={() => setActive(false)}
             >
-              Cancel
+              {t('Cancel')}
             </button>
           </div>
           {!isDetails && (
             <div className={classes.button__box}>
-              <FormBtn>Submit</FormBtn>
+              <FormBtn>{t('Submit')}</FormBtn>
             </div>
           )}
         </div>
