@@ -1,0 +1,148 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 12px;
+    padding: 16px 0 16px;
+    width: 266px;
+    background-color: #16191C;
+    border: solid 2px #293138;
+    border-radius: 4px;
+}
+
+.title__container {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.button__box {
+    position: absolute;
+    right: 0;
+}
+
+.title__change_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 8px;
+}
+
+.title {
+    max-width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:hover {
+        cursor: text;
+    }
+}
+
+.label {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.input_box {
+    margin-top: 24px;
+    &:first-child {
+        margin-top: 0;
+    }
+}
+
+.input {
+    display: block;
+    height: 100%;
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background-color: var(--input-bg);
+    color: var(--title-color);
+    border: 1px solid transparent;
+    font-size: 20px;
+    border: 1px solid transparent;
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    position: relative;
+}
+
+.title__input {
+    width: 80%;
+}
+
+.list {
+    overflow-y: auto;
+    max-height: calc(100vh - 395px);
+    min-height: 212px;
+    width: 90%;
+    padding: 0 8px;
+    &__active {
+        overflow-y: auto;
+        max-height: calc(100vh - 395px);
+        min-height: 212px;
+        width: 90%;
+        background-color: #656565;
+        padding: 0 8px;
+    }
+}
+
+.title__buttons {
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cancel__button {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    padding: 5px 7px;
+    color: var(--main-color);
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 4px;
+    z-index: 1;
+    border: 1px solid var(--main-color);
+    transition: color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+    &:hover {
+        border-color: rgb(165, 40, 40);
+        color: rgb(165, 40, 40);
+    }
+}
+
+.button {
+    width: 80%;
+    margin-top: 16px;
+    height: 40px;
+}
+
+@media (max-width: 660px) {
+    .list {
+        max-height: calc(100vh - 435px);
+        &__active {
+            max-height: calc(100vh - 435px);
+        }
+    }
+}
+
+@media (max-width: 410px) {
+    .list {
+        max-height: calc(100vh - 485px);
+        &__active {
+            max-height: calc(100vh - 485px);
+        }
+    }
+    
+    .button {
+        height: 30px;
+    }
+
+    .title {
+        font-size: 20px;
+        line-height: 24px;
+    }
+}

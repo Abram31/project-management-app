@@ -1,0 +1,13 @@
+@mixin title-page {
+    padding: 0 0 2rem 0;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+}
+
+@mixin box-shadow {
+    background-color: #ffffff36;
+    color: whitesmoke;
+    box-shadow: .1rem .3rem .6rem;
+    cursor: pointer;
+}
