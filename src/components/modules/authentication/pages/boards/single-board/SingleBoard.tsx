@@ -8,7 +8,6 @@ import { fetchRequest } from 'fetch/fetchRequest';
 import { ROUTES, URLS } from 'constants/constants';
 import { useAppDispatch, useAuthUser } from 'hooks/hooks';
 import Preloader from 'components/modules/common/preloader/Preloader';
-import { setColumn } from 'store/boardsSlice';
 
 import Column from '../column/Column';
 import FormBtn from 'components/modules/authentication/formBtn/FormBtn';
@@ -115,9 +114,14 @@ const SingleBoard = () => {
 
   const handleAddColumn: FormEventHandler<HTMLFormElement> = (e) => {
     setLoading(true);
-    setAddColumnModal(false);
     e.preventDefault();
     const { column_title } = getValues();
+    if (!column_title) {
+      toast.error('Please fill in column title.');
+      setLoading(false);
+      return;
+    }
+    setAddColumnModal(false);
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns`,
       method: 'POST',
@@ -129,7 +133,6 @@ const SingleBoard = () => {
     request
       .then(({ id, order, title }: { id: string; order: string; title: string }) => {
         getData(boardId, updateData);
-        dispatch(setColumn({ boardId: boardId!, columnId: id, title: title, order }));
       })
       .then(() => setLoading(false));
     toast.success(t('ColumnCreated'));

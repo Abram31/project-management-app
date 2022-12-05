@@ -36,14 +36,17 @@ function App() {
       <Header handleLogin={handleLogin} handleLogout={handleLogout} />
       <Main>
         <Routes>
-          <Route path={RouteMain} element={<WelcomPage />} />
+          <Route
+            path={RouteMain}
+            element={!userExist ? <WelcomPage /> : <Navigate to={ROUTES.boards} />}
+          />
           <Route
             path={ROUTES.signin}
-            element={!userExist ? <SignIn /> : <Navigate to={RouteMain} />}
+            element={!userExist ? <SignIn /> : <Navigate to={ROUTES.boards} />}
           />
           <Route
             path={ROUTES.signup}
-            element={!userExist ? <SignUp /> : <Navigate to={RouteMain} />}
+            element={!userExist ? <SignUp /> : <Navigate to={ROUTES.boards} />}
           />
           <Route element={<PrivateRoutes />}>
             <Route path={ROUTES.boards} element={<PageWIthBoards />} />
