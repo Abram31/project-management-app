@@ -60,9 +60,14 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
 
   const handleAddTask: FormEventHandler<HTMLFormElement> = (e) => {
     setLoading(true);
-    setAddTaskModal(false);
     e.preventDefault();
     const { task_title_create, task_description_create } = getValues();
+    if (!task_title_create || !task_description_create) {
+      toast.error('Please fill in all fields.');
+      setLoading(false);
+      return;
+    }
+    setAddTaskModal(false);
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns/${column.id}/tasks`,
       method: 'POST',
@@ -125,9 +130,14 @@ const Column = ({ column, tasks, index, boardId, updateData }: Props) => {
 
   const handleEditTask: FormEventHandler<HTMLFormElement> = (e) => {
     setLoading(true);
-    setUpdateTask(false);
     e.preventDefault();
     const { task_title_edit, task_description_edit } = getValues();
+    if (!task_title_edit || !task_description_edit) {
+      toast.error('Please fill in all fields.');
+      setLoading(false);
+      return;
+    }
+    setUpdateTask(false);
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns/${column.id}/tasks/${currentTask!.id}`,
       method: 'PUT',

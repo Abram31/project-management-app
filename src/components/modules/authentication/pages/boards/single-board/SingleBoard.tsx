@@ -113,9 +113,14 @@ const SingleBoard = () => {
 
   const handleAddColumn: FormEventHandler<HTMLFormElement> = (e) => {
     setLoading(true);
-    setAddColumnModal(false);
     e.preventDefault();
     const { column_title } = getValues();
+    if (!column_title) {
+      toast.error('Please fill in column title.');
+      setLoading(false);
+      return;
+    }
+    setAddColumnModal(false);
     const request = fetchRequest({
       URL: `${URLS.boards}/${boardId}/columns`,
       method: 'POST',
