@@ -41,7 +41,6 @@ export const ModalWindowNewBoard = ({
           position: toast.POSITION.TOP_CENTER,
           closeButton: true,
         });
-        setLoading(false);
         dispatch(setBoard({ title: title, description: description, id: id, columns: {} }));
       })
       .catch(() => {
@@ -50,6 +49,9 @@ export const ModalWindowNewBoard = ({
           position: toast.POSITION.TOP_CENTER,
           closeButton: true,
         });
+      })
+      .finally(() => {
+        setLoading(false);
       });
     closeModal();
   };

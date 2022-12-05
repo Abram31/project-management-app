@@ -14,6 +14,7 @@ import { Board } from './Board/Board';
 import { ModalWindowNewBoard } from './ModalWindowNewBoard/ModalWindowNewBoard';
 import module from './PageWIthBoards.module.scss';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 
 export interface onClickProps {
   event: MouseEventHandler<HTMLDivElement>;
@@ -50,12 +51,30 @@ export const PageWIthBoards = () => {
     if (element.id === 'unconfirm') {
       setСonfirmation(false);
     } else {
+      setLoading(false);
       fetchRequest({
         method: 'DELETE',
         token: localStorage.getItem('token')!,
         URL: `${URLS.boards}/${boardID}`,
-      });
-      dispatch(removeBoard(boardID));
+      })
+        .then(() => {
+          toast.success('Board deleted', {
+            toastId: 'getUserName',
+            position: toast.POSITION.TOP_CENTER,
+            closeButton: true,
+          });
+          dispatch(removeBoard(boardID));
+        })
+        .catch(() => {
+          toast.error('Something went wrong board not removed', {
+            toastId: 'getUserName',
+            position: toast.POSITION.TOP_CENTER,
+            closeButton: true,
+          });
+        })
+        .finally(() => {
+          setLoading(false);
+        });
       setСonfirmation(false);
     }
   };
@@ -74,10 +93,20 @@ export const PageWIthBoards = () => {
       method: 'GET',
       token: localStorage.getItem('token')!,
       URL: URLS.boards,
-    }).then((data) => {
-      dispatch(setBoards(data));
-      setLoading(false);
-    });
+    })
+      .then((data) => {
+        dispatch(setBoards(data));
+      })
+      .catch(() => {
+        toast.error('Something went wrong', {
+          toastId: 'getUserName',
+          position: toast.POSITION.TOP_CENTER,
+          closeButton: true,
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [dispatch]);
 
   return (
