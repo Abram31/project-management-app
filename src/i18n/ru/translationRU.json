@@ -47,6 +47,11 @@
   "DeleteColumnQuestion": "Вы уверены, что хотите удалить эту колонку?",
   "DeleteTaskQuestion": "Вы уверены, что хотите удалить эту задачу?",
   "Description": "Описание",
+  "BoardDeleted": "Доска удалена",
+  "boardNotRemoved": "Что-то пошло не так, доска не удалена",
+  "SomethingWentWrong": "Что-то пошло не так",
+  "NewBoardNotCreated": "Новая доска не создана",
+  "NewBoardCreated": "Новая доска создана",
   "errors": {
     "requiredErr": "Это поле обязательно к заполнению.",
     "userNameErr": "Должно быть минимум 2 символа (только буквы, апострофы, дефисы).",

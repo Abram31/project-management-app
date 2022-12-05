@@ -243,7 +243,9 @@ const SingleBoard = () => {
     <>
       <div className={classes.container}>
         <div className={classes.container__header}>
-          <Link to={ROUTES.boards}>{t('Back')}</Link>
+          <Link to={ROUTES.boards} className={classes.back_link}>
+            {t('Back')}
+          </Link>
           <h2 className={classes.title}>{data && data.boardTitle}</h2>
         </div>
         <div className={classes.columns__container}>

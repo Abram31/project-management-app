@@ -36,7 +36,7 @@ export const ModalWindowNewBoard = ({
       bodyParams: { title: board_title || ' ', description: board_description || ' ' },
     })
       .then(({ description, title, id }: BorderData) => {
-        toast.success('New board created', {
+        toast.success(t('NewBoardCreated'), {
           toastId: 'getUserName',
           position: toast.POSITION.TOP_CENTER,
           closeButton: true,
@@ -44,7 +44,7 @@ export const ModalWindowNewBoard = ({
         dispatch(setBoard({ title: title, description: description, id: id, columns: {} }));
       })
       .catch(() => {
-        toast.error('New board not created', {
+        toast.error(t('NewBoardNotCreated'), {
           toastId: 'getUserName',
           position: toast.POSITION.TOP_CENTER,
           closeButton: true,
